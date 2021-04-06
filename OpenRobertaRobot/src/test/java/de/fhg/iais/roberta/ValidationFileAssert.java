@@ -12,8 +12,8 @@ import java.nio.file.StandardOpenOption;
 
 public class ValidationFileAssert extends AbstractAssert<ValidationFileAssert, String> {
 
-    public static final Path VALIDATION_DIRECTORY = Paths.get("data/test/validation");
-    public static final Path OUTPUT_DIRECTORY = Paths.get("data/test/output");
+    public static final Path VALIDATION_DIRECTORY = Paths.get("src/test/resources/_expected");
+    public static final Path OUTPUT_DIRECTORY = Paths.get("target/unitTests");
     public static final String HEADER_LINE = "<-- This file was automatically generated, if the content is alright, remove this line -->";
     public static final String DEFAULT_MASK = "<MASK>";
 
