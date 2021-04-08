@@ -1,3 +1,0 @@
-DriveAction [FOREWARD, MotionParam [speed=NumConst [30], duration=MotorDuration [type=DISTANCE, value=NumConst [20]]]]
-WaitTimeStmt [time=NumConst [5000]]
-DriveAction [FOREWARD, MotionParam [speed=NumConst [30], duration=MotorDuration [type=DISTANCE, value=NumConst [20]]]]
