@@ -210,6 +210,11 @@ public class MbedValidatorAndCollectorVisitor extends CommonNepoValidatorAndColl
     }
 
     @Override
+    public Void visitInfraredSensor(InfraredSensor<Void> infraredSensor) {
+        return addActorMaybeCallibot(infraredSensor);
+    }
+
+    @Override
     public Void visitKeysSensor(KeysSensor<Void> keysSensor) {
         checkSensorExists(keysSensor);
         usedHardwareBuilder.addUsedActor(new UsedActor("", SC.KEY));
@@ -428,6 +433,7 @@ public class MbedValidatorAndCollectorVisitor extends CommonNepoValidatorAndColl
         checkSensorExists(ultrasonicSensor);
         return addActorMaybeCallibot(ultrasonicSensor, SC.ULTRASONIC);
     }
+
     private ConfigurationComponent checkActorByPortExists(Phrase<Void> actor, String port) {
         ConfigurationComponent usedActor = robotConfiguration.optConfigurationComponent(port);
         if ( usedActor == null ) {
@@ -516,7 +522,7 @@ public class MbedValidatorAndCollectorVisitor extends CommonNepoValidatorAndColl
         return addActorMaybeCallibot(phrase, configurationComponent.getComponentType());
     }
 
-    private Void addActorMaybeCallibot(WithUserDefinedPort<Void> phrase, String componentType ) {
+    private Void addActorMaybeCallibot(WithUserDefinedPort<Void> phrase, String componentType) {
         final String userDefinedPort = phrase.getUserDefinedPort();
         ConfigurationComponent configurationComponent = checkActorByPortExists((Phrase<Void>) phrase, userDefinedPort);
         if ( configurationComponent != null ) {

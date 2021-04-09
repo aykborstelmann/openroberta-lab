@@ -102,4 +102,6 @@ public interface IMbedVisitorWithoutDefault<V>
     V visitGetSampleSensor(GetSampleSensor<V> sensorGetSample);
 
     V visitHumiditySensor(HumiditySensor<V> humiditySensor);
+
+    V visitInfraredSensor(InfraredSensor<V> infraredSensor);
 }
