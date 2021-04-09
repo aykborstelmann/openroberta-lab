@@ -7,7 +7,7 @@ import de.fhg.iais.roberta.components.Project;
 import de.fhg.iais.roberta.visitor.validate.CommonNepoValidatorAndCollectorVisitor;
 import de.fhg.iais.roberta.visitor.validate.Calliope2017ValidatorAndCollectorVisitor;
 
-public class Calliope2017ValidatorAndCollectorWorker extends AbstractValidatorAndCollectorWorker {
+public class Calliope2017ValidatorAndCollectorWorker extends CalliopeValidatorAndCollectorWorker {
 
     @Override
     protected CommonNepoValidatorAndCollectorVisitor getVisitor(Project project, ClassToInstanceMap<IProjectBean.IBuilder<?>> beanBuilders) {

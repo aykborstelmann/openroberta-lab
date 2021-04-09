@@ -3,7 +3,6 @@ package de.fhg.iais.roberta.worker;
 import com.google.common.collect.ClassToInstanceMap;
 import com.google.common.collect.ImmutableClassToInstanceMap;
 import com.google.common.collect.ImmutableClassToInstanceMap.Builder;
-
 import de.fhg.iais.roberta.bean.IProjectBean;
 import de.fhg.iais.roberta.bean.IProjectBean.IBuilder;
 import de.fhg.iais.roberta.bean.UsedHardwareBean;
@@ -15,6 +14,7 @@ import de.fhg.iais.roberta.visitor.IVisitor;
 import de.fhg.iais.roberta.visitor.validate.AbstractProgramValidatorVisitor;
 import de.fhg.iais.roberta.visitor.validate.CommonNepoValidatorAndCollectorVisitor;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -26,7 +26,8 @@ public abstract class AbstractValidatorAndCollectorWorker implements IWorker {
     @Override
     public final void execute(Project project) {
         Builder<IProjectBean.IBuilder<?>> mapBuilder = new ImmutableClassToInstanceMap.Builder<>();
-        mapBuilder.put(UsedMethodBean.Builder.class, new UsedMethodBean.Builder());
+        UsedMethodBean.Builder usedMethodBeanBuilder = new UsedMethodBean.Builder();
+        mapBuilder.put(UsedMethodBean.Builder.class, usedMethodBeanBuilder);
         UsedHardwareBean.Builder usedHardwareBeanBuilder = new UsedHardwareBean.Builder();
         mapBuilder.put(UsedHardwareBean.Builder.class, usedHardwareBeanBuilder);
         ImmutableClassToInstanceMap<IBuilder<?>> map = mapBuilder.build();
@@ -44,6 +45,8 @@ public abstract class AbstractValidatorAndCollectorWorker implements IWorker {
                 }
             }
         }
+        usedMethodBeanBuilder.addAdditionalEnums(getAdditionalMethodEnums());
+
         project.addWorkerResult(map.get(UsedMethodBean.Builder.class).build());
         project.addWorkerResult(map.get(UsedHardwareBean.Builder.class).build());
 
@@ -71,5 +74,14 @@ public abstract class AbstractValidatorAndCollectorWorker implements IWorker {
                 phrase.accept(visitor);
             }
         }
+    }
+
+    /**
+     * Returns additional enums which should be added to the used method collection. Used by subclasses to keep the execute method generic.
+     *
+     * @return the additional enums required
+     */
+    protected List<Class<? extends Enum<?>>> getAdditionalMethodEnums() {
+        return Collections.emptyList();
     }
 }
