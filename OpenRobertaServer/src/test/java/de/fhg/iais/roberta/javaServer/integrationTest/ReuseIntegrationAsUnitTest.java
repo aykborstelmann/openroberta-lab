@@ -186,13 +186,13 @@ public class ReuseIntegrationAsUnitTest {
             String stackMachineCode = project.getCompiledHex();
             codeGenerationOk = codeGenerationOk &&
                     compareExpectedToGenerated(
-                            CROSS_COMPILER_TESTS + COMMON + EXPECTED + STACKMACHINE_CODE_GENERATED,
+                            CROSS_COMPILER_TESTS + EXPECTED + COMMON + STACKMACHINE_CODE_GENERATED,
                             progName,
                             stackMachineCode,
                             "json");
             if ( STORE_ALWAYS_DATA_INTO_FILES || !codeGenerationOk ) {
                 storeDataIntoFiles(
-                        COMMON + EXPECTED + STACKMACHINE_CODE_GENERATED,
+                    EXPECTED + COMMON + STACKMACHINE_CODE_GENERATED,
                         "",
                         progName,
                         stackMachineCode,
@@ -350,14 +350,14 @@ public class ReuseIntegrationAsUnitTest {
         }
         String generatedAstAsString = sb.toString();
         if ( STORE_ALWAYS_DATA_INTO_FILES ) {
-            storeDataIntoFiles(directory + EXPECTED + AST_GENERATED, robotSubDirectory, programName, generatedAstAsString, "ast");
+            storeDataIntoFiles(EXPECTED + directory + AST_GENERATED, robotSubDirectory, programName, generatedAstAsString, "ast");
         }
 
         boolean thisUnitTestIsOk = true;
         if ( COMPARE_EXPECTED_AND_ACTUAL ) {
             thisUnitTestIsOk =
                 compareExpectedToGenerated(
-                    CROSS_COMPILER_TESTS + directory + EXPECTED + AST_GENERATED + robotSubDirectory,
+                    CROSS_COMPILER_TESTS + EXPECTED + directory + AST_GENERATED + robotSubDirectory,
                     programName,
                     generatedAstAsString,
                     "ast");
@@ -428,14 +428,14 @@ public class ReuseIntegrationAsUnitTest {
                 String generatedProgramSource = project.getSourceCode().toString();
                 thisUnitTestIsOk =
                     compareExpectedToGenerated(
-                        CROSS_COMPILER_TESTS + directory + EXPECTED + TARGET_LANGUAGE_GENERATED + robotName + "/",
+                        CROSS_COMPILER_TESTS + EXPECTED + directory + TARGET_LANGUAGE_GENERATED + robotName + "/",
                         programName,
                         generatedProgramSource,
                             testFactory.getSourceCodeFileExtension());
-                if ( STORE_ALWAYS_DATA_INTO_FILES || !thisUnitTestIsOk ) {
+                if ( STORE_ALWAYS_DATA_INTO_FILES ) {
                     storeExportOfXml(directory, programName, robotName, programXml, configXml);
                     storeDataIntoFiles(
-                        directory + EXPECTED + TARGET_LANGUAGE_GENERATED,
+                        EXPECTED + directory + TARGET_LANGUAGE_GENERATED,
                         robotName,
                         programName,
                         generatedProgramSource,
