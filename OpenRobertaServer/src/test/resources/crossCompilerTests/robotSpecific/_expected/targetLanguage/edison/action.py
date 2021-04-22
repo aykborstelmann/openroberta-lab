@@ -55,6 +55,14 @@ def sounds():
     Ed.TimeWait(250, Ed.TIME_MILLISECONDS)
     Ed.PlayTone(4000000/391, 125)
     Ed.TimeWait(125, Ed.TIME_MILLISECONDS)
+    ___soundfile1 = Ed.TuneString(7,"c8e8g8z")
+    Ed.PlayTune(___soundfile1)
+    while (Ed.ReadMusicEnd() == Ed.MUSIC_NOT_FINISHED):
+        pass
+    ___soundfile2 = Ed.TuneString(7,"g8e8c8z")
+    Ed.PlayTune(___soundfile2)
+    while (Ed.ReadMusicEnd() == Ed.MUSIC_NOT_FINISHED):
+        pass
 
 def lights():
     global ___numberVar, ___booleanVar, ___numberList

@@ -43,7 +43,7 @@ public class ReuseIntegrationAsUnitTest {
     private static final boolean COMPARE_EXPECTED_AND_ACTUAL = true;
     private static final boolean LOG_NAMES_ON_SUCCESS = true;
     private static final boolean TEST_SUCCEEDS_EVEN_IF_REGENERATION_FAILS = true;
-    private static final boolean TEST_SUCCEEDS_EVEN_IF_CODE_GENERATION_FAILS = true;
+    private static final boolean TEST_SUCCEEDS_EVEN_IF_CODE_GENERATION_FAILS = false;
 
     private static final Logger LOG = LoggerFactory.getLogger(ReuseIntegrationAsUnitTest.class);
     private static final String ROBOT_NAME_FOR_COMMON_TESTS = "ev3lejosv1";
@@ -169,6 +169,7 @@ public class ReuseIntegrationAsUnitTest {
             for ( String excludeRobot : exclude.keySet() ) {
                 if ( excludeRobot.equals(robotName) || excludeRobot.equals("ALL") ) {
                     LOG.info("!!!  prog " + progName + " for robot " + robotName + " is excluded. Reason: " + exclude.getString(excludeRobot));
+                    return;
                 }
             }
         }
@@ -256,8 +257,8 @@ public class ReuseIntegrationAsUnitTest {
 
     @Test
     public void testOneRobotSpecificProgramAsUnitTests() throws Exception {
-        String robotName = "unowifirev2";
-        String programName = "text_colours_functions";
+        String robotName = "sensebox";
+        String programName = "sensors_1";
         LOG.info("========= testing program " + programName + " for robot " + robotName);
         final String resourceDirectory = setupRobotFactoryAndGetResourceDirForRobotSpecificTests(robotName);
         runRegenerateAndCodeGenerationForOneRobotSpecificProgram(resourceDirectory, programName + ".xml", robotName);
@@ -442,7 +443,7 @@ public class ReuseIntegrationAsUnitTest {
                 }
             }
         } catch ( Exception e ) {
-            LOG.error("showsource workflow failed for " + programName + " with Exception " + e.getMessage());
+            LOG.error("showsource workflow failed for " + programName + " with Exception " + e.getMessage(), e);
             thisUnitTestIsOk = false;
         }
         return thisUnitTestIsOk;

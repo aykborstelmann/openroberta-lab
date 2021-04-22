@@ -40,7 +40,7 @@
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": true
+    "value": false
   },
   {
     "opc": "jump",
@@ -93,7 +93,7 @@
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": true
+    "value": false
   },
   {
     "opc": "jump",
@@ -252,7 +252,7 @@
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": true
+    "value": false
   },
   {
     "op": "NOT",
@@ -310,7 +310,7 @@
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": true
+    "value": false
   },
   {
     "op": "NOT",
@@ -590,7 +590,7 @@
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": false
+    "value": true
   },
   {
     "opc": "jump",
@@ -643,7 +643,7 @@
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": false
+    "value": true
   },
   {
     "opc": "jump",
@@ -812,7 +812,7 @@
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": false
+    "value": true
   },
   {
     "op": "NOT",
@@ -870,7 +870,7 @@
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": false
+    "value": true
   },
   {
     "op": "NOT",
@@ -928,7 +928,7 @@
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": true
+    "value": false
   },
   {
     "opc": "jump",
@@ -958,42 +958,22 @@
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": true
+    "value": false
   },
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 205
+    "target": 201
   },
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": true
+    "value": false
   },
   {
     "opc": "jump",
     "conditional": false,
-    "target": 204
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
-    "opc": "jump",
-    "conditional": "always",
-    "target": 205
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
-    "opc": "jump",
-    "conditional": false,
-    "target": 210
+    "target": 206
   },
   {
     "opc": "expr",
@@ -1012,7 +992,7 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 210
+    "target": 206
   },
   {
     "opc": "comment",
@@ -1026,7 +1006,7 @@
   {
     "opc": "jump",
     "conditional": false,
-    "target": 215
+    "target": 211
   },
   {
     "opc": "expr",
@@ -1036,17 +1016,17 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 216
+    "target": 212
   },
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": true
+    "value": false
   },
   {
     "opc": "jump",
     "conditional": true,
-    "target": 223
+    "target": 219
   },
   {
     "opc": "expr",
@@ -1056,7 +1036,7 @@
   {
     "opc": "jump",
     "conditional": false,
-    "target": 221
+    "target": 217
   },
   {
     "opc": "expr",
@@ -1066,7 +1046,7 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 222
+    "target": 218
   },
   {
     "opc": "expr",
@@ -1076,7 +1056,7 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 228
+    "target": 220
   },
   {
     "opc": "expr",
@@ -1086,27 +1066,7 @@
   {
     "opc": "jump",
     "conditional": false,
-    "target": 227
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": false
-  },
-  {
-    "opc": "jump",
-    "conditional": "always",
-    "target": 228
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
-    "opc": "jump",
-    "conditional": false,
-    "target": 233
+    "target": 225
   },
   {
     "opc": "expr",
@@ -1125,7 +1085,7 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 233
+    "target": 225
   },
   {
     "opc": "comment",
@@ -1139,6 +1099,51 @@
   {
     "opc": "jump",
     "conditional": true,
+    "target": 230
+  },
+  {
+    "opc": "expr",
+    "expr": "BOOL_CONST",
+    "value": true
+  },
+  {
+    "opc": "jump",
+    "conditional": "always",
+    "target": 231
+  },
+  {
+    "opc": "expr",
+    "expr": "BOOL_CONST",
+    "value": true
+  },
+  {
+    "op": "NOT",
+    "opc": "expr",
+    "expr": "Unary"
+  },
+  {
+    "opc": "jump",
+    "conditional": false,
+    "target": 240
+  },
+  {
+    "opc": "expr",
+    "expr": "BOOL_CONST",
+    "value": true
+  },
+  {
+    "opc": "jump",
+    "conditional": true,
+    "target": 237
+  },
+  {
+    "opc": "expr",
+    "expr": "BOOL_CONST",
+    "value": true
+  },
+  {
+    "opc": "jump",
+    "conditional": "always",
     "target": 238
   },
   {
@@ -1147,94 +1152,24 @@
     "value": true
   },
   {
-    "opc": "jump",
-    "conditional": "always",
-    "target": 239
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
     "op": "NOT",
     "opc": "expr",
     "expr": "Unary"
   },
   {
     "opc": "jump",
-    "conditional": false,
-    "target": 248
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
-    "opc": "jump",
-    "conditional": true,
-    "target": 245
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
-    "opc": "jump",
     "conditional": "always",
+    "target": 241
+  },
+  {
+    "opc": "expr",
+    "expr": "BOOL_CONST",
+    "value": false
+  },
+  {
+    "opc": "jump",
+    "conditional": false,
     "target": 246
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
-    "op": "NOT",
-    "opc": "expr",
-    "expr": "Unary"
-  },
-  {
-    "opc": "jump",
-    "conditional": "always",
-    "target": 254
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
-    "opc": "jump",
-    "conditional": true,
-    "target": 252
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
-    "opc": "jump",
-    "conditional": "always",
-    "target": 253
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
-    "op": "NOT",
-    "opc": "expr",
-    "expr": "Unary"
-  },
-  {
-    "opc": "jump",
-    "conditional": false,
-    "target": 259
   },
   {
     "opc": "expr",
@@ -1253,7 +1188,7 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 259
+    "target": 246
   },
   {
     "opc": "comment",
@@ -1267,7 +1202,7 @@
   {
     "opc": "jump",
     "conditional": false,
-    "target": 264
+    "target": 251
   },
   {
     "opc": "expr",
@@ -1277,12 +1212,12 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 265
+    "target": 252
   },
   {
     "opc": "expr",
     "expr": "BOOL_CONST",
-    "value": true
+    "value": false
   },
   {
     "op": "NOT",
@@ -1292,7 +1227,7 @@
   {
     "opc": "jump",
     "conditional": true,
-    "target": 274
+    "target": 261
   },
   {
     "opc": "expr",
@@ -1302,7 +1237,7 @@
   {
     "opc": "jump",
     "conditional": false,
-    "target": 271
+    "target": 258
   },
   {
     "opc": "expr",
@@ -1312,32 +1247,7 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 272
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
-    "op": "NOT",
-    "opc": "expr",
-    "expr": "Unary"
-  },
-  {
-    "opc": "jump",
-    "conditional": "always",
-    "target": 280
-  },
-  {
-    "opc": "expr",
-    "expr": "BOOL_CONST",
-    "value": true
-  },
-  {
-    "opc": "jump",
-    "conditional": false,
-    "target": 278
+    "target": 259
   },
   {
     "opc": "expr",
@@ -1345,9 +1255,14 @@
     "value": false
   },
   {
+    "op": "NOT",
+    "opc": "expr",
+    "expr": "Unary"
+  },
+  {
     "opc": "jump",
     "conditional": "always",
-    "target": 279
+    "target": 262
   },
   {
     "opc": "expr",
@@ -1355,14 +1270,9 @@
     "value": true
   },
   {
-    "op": "NOT",
-    "opc": "expr",
-    "expr": "Unary"
-  },
-  {
     "opc": "jump",
     "conditional": false,
-    "target": 285
+    "target": 267
   },
   {
     "opc": "expr",
@@ -1381,7 +1291,7 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 285
+    "target": 267
   },
   {
     "opc": "comment",

@@ -5,10 +5,14 @@
 #undef min
 #include <NEPODefs.h>
 #include <stdlib.h>
+#include <bsec.h>
+#define _readIaq(X, Y) ((X.run()) ? Y : Y)
+#include <Wire.h>
 
 
 
 void sensors();
+void sensorsWaitUntil();
 
 
 double ___numVar;
@@ -52,6 +56,7 @@ int _output_L = 5;
 int _potentiometer_P = 3;
 int _button_B3 = 6;
 BMP280 _bmp280_T;
+Bsec _iaqSensor_U;
 VEML6070 _veml_V;
 TSL45315 _tsl_V;
 int _input_S2 = 4;
@@ -86,6 +91,183 @@ void sensors() {
     __time_1 = millis();
 }
 
+void sensorsWaitUntil() {
+    while (true) {
+        if ( digitalRead(_button_B3) == true ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( analogRead(_output_L)/10.24 < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( ((double)analogRead(_potentiometer_P))*5/1024 < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( get_microphone_volume(_mic_S4) > 50 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _hdc1080_H.getHumidity() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _hdc1080_H.getTemperature() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _bmp280_T.getTemperature() < 20 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _bmp280_T.getPressure() < 101325 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _tsl_V.getIlluminance() > 500 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _veml_V.getUvIntensity() > 50 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _bmx055_B.getAccelerationX() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _bmx055_B.getAccelerationY() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _bmx055_B.getAccelerationZ() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _sds011_S5.getPm25() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _sds011_S5.getPm10() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _gps_G2.getLatitude() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _gps_G2.getLongitude() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _gps_G2.getAltitude() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _gps_G2.getSpeed() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _gps_G2.getDate() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _gps_G2.getTime() < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( (int) (millis() - __time_1) > 500 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _readIaq(_iaqSensor_U, _iaqSensor_U.temperature) < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _readIaq(_iaqSensor_U, _iaqSensor_U.humidity) < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _readIaq(_iaqSensor_U, _iaqSensor_U.pressure) < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _readIaq(_iaqSensor_U, _iaqSensor_U.iaq) < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _readIaq(_iaqSensor_U, _iaqSensor_U.iaqAccuracy) < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _readIaq(_iaqSensor_U, _iaqSensor_U.co2Equivalent) < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+    while (true) {
+        if ( _readIaq(_iaqSensor_U, _iaqSensor_U.breathVocEquivalent) < 30 ) {
+            break;
+        }
+        delay(1);
+    }
+}
+
 void setup()
 {
     Serial.begin(9600);
@@ -97,6 +279,21 @@ void setup()
     _gps_G2.begin();
     pinMode(_button_B3, INPUT);
     _bmp280_T.begin();
+    Wire.begin();
+    _iaqSensor_U.begin(BME680_I2C_ADDR_PRIMARY, Wire);
+    bsec_virtual_sensor_t _sensorList[10] = {
+        BSEC_OUTPUT_RAW_TEMPERATURE,
+        BSEC_OUTPUT_RAW_PRESSURE,
+        BSEC_OUTPUT_RAW_HUMIDITY,
+        BSEC_OUTPUT_RAW_GAS,
+        BSEC_OUTPUT_IAQ,
+        BSEC_OUTPUT_STATIC_IAQ,
+        BSEC_OUTPUT_CO2_EQUIVALENT,
+        BSEC_OUTPUT_BREATH_VOC_EQUIVALENT,
+        BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_TEMPERATURE,
+        BSEC_OUTPUT_SENSOR_HEAT_COMPENSATED_HUMIDITY,
+    };
+    _iaqSensor_U.updateSubscription(_sensorList, 10, BSEC_SAMPLE_RATE_LP);
     _veml_V.begin();
     _tsl_V.begin();
     pinMode(_input_S2, INPUT);
@@ -113,4 +310,5 @@ void setup()
 void loop()
 {
     sensors();
+    sensorsWaitUntil();
 }

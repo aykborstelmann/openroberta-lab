@@ -4,6 +4,7 @@
 
 #include <Servo/src/Servo.h>
 #include <LiquidCrystal_I2C/LiquidCrystal_I2C.h>
+#include <Adafruit_SSD1306.h>
 #include <Stepper/src/Stepper.h>
 #include <NEPODefs.h>
 
@@ -22,7 +23,7 @@ std::list<double> ___numberList;
 std::list<bool> ___booleanList;
 std::list<String> ___stringList;
 std::list<unsigned int> ___colourList;
-int _led_red_R2 = 8;
+int _led_red_R2 = 5;
 int _led_green_R2 = 9;
 int _led_blue_R2 = 10;
 int _buzzer_S3 = 11;
@@ -32,8 +33,13 @@ int _relay_R = 6;
 Servo _servo_S;
 LiquidCrystal_I2C _lcd_L3(0x27, 16, 2);
 int _led_L = LED_BUILTIN;
+#define SCREEN_ADDRESS "0x3D"
+#define OLED_RESET 4
+#define SCREEN_WIDTH 128
+#define SCREEN_HEIGHT 64
+Adafruit_SSD1306 _lcd_O(SCREEN_WIDTH,SCREEN_HEIGHT,&Wire, OLED_RESET);
 int _SPU_S2 = 2048;
-Stepper _stepper_S2(_SPU_S2, 1, 4, 2, 5);
+Stepper _stepper_S2(_SPU_S2, 1, 4, 2, 12);
 
 void action() {
     move();
@@ -48,6 +54,10 @@ void display() {
     _lcd_L3.print(___stringVar);
     
     _lcd_L3.clear();
+    _lcd_O.setCursor(___numberVar,___numberVar);
+    _lcd_O.print(___stringVar);
+    _lcd_O.display();
+    _lcd_O.clearDisplay();
 }
 
 void lights() {
@@ -93,6 +103,7 @@ void setup()
     _servo_S.attach(7);
     _lcd_L3.begin();
     pinMode(_led_L, OUTPUT);
+    _lcd_O.begin(SSD1306_SWITCHCAPVCC, SCREEN_ADDRESS);
     ___numberVar = 0;
     ___booleanVar = true;
     ___stringVar = "";

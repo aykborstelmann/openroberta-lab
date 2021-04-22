@@ -238,7 +238,7 @@ public class MbedValidatorAndCollectorVisitor extends CommonNepoValidatorAndColl
     @Override
     public Void visitLightAction(LightAction<Void> lightAction) {
         checkActorByPortExists(lightAction, lightAction.getPort());
-        requiredComponentVisited(lightAction, lightAction.getRgbLedColor());
+        optionalComponentVisited(lightAction.getRgbLedColor());
         usedHardwareBuilder.addUsedActor(new UsedActor("", SC.CALLIBOT));
         return null;
     }

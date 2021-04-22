@@ -21,8 +21,9 @@ hal = Hal(_brickConfiguration)
 
 ___text = "start:"
 ___eight = " eight"
+___number = 0
 def run():
-    global ___text, ___eight
+    global ___text, ___eight, ___number
     # String Concat -- Start --
     ___text += str(" one")
     if not "start: one" == ___text:
@@ -41,6 +42,10 @@ def run():
         print("Assertion failed: ", "POS-5", "start: one two three456 seven eight nine", "EQ", ___text)
     ___text = "".join(str(arg) for arg in ["".join(str(arg) for arg in [___text, "ten"]), "".join(str(arg) for arg in [" eleven", " twelve"])])
     print("String Concat SUCCESS" if ( "start: one two three456 seven eight nine ten eleven twelve" == ___text ) else "String Concat FAIL")
+    ___number = float(___text)
+    ___number = ord(___text[0])
+    ___text = str(10)
+    ___text = chr((int)(30))
     # String Concat -- End --
 
 def main():

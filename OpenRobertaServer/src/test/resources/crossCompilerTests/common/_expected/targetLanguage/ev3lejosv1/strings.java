@@ -43,6 +43,7 @@ public class NEPOprog {
     
     String ___text = "start:";
     String ___eight = " eight";
+    float ___number = 0;
     
     public void run() throws Exception {
         // String Concat -- Start --
@@ -68,6 +69,11 @@ public class NEPOprog {
         }
         ___text = String.valueOf(String.valueOf(___text) + String.valueOf("ten")) + String.valueOf(String.valueOf(" eleven") + String.valueOf(" twelve"));
         System.out.println(( ( "start: one two three456 seven eight nine ten eleven twelve".equals(___text) ) ? "String Concat SUCCESS" : "String Concat FAIL" ));
+        ___number = Float.parseFloat(___text);
+        ___number = (int)(___text.charAt(0));
+        ___text = (String.valueOf(10));
+        ___text = String.valueOf((char)(int)(30));
         // String Concat -- End --
     }
+
 }

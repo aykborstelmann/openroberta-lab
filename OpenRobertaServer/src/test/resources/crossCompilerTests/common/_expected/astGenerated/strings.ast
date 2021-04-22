@@ -27,4 +27,16 @@ exprStmt StringConst [String Concat SUCCESS]
 exprStmt StringConst [String Concat FAIL]
 ]]
 
+Var [number] := FunctionExpr [TextStringCastNumberFunct [[Var [text]]]]
+
+
+Var [number] := FunctionExpr [TextCharCastNumberFunct [[Var [text], NumConst [0]]]]
+
+
+Var [text] := FunctionExpr [MathCastStringFunct [[NumConst [10]]]]
+
+
+Var [text] := FunctionExpr [MathCastCharFunct [[NumConst [30]]]]
+
+
 StmtTextComment [String Concat -- End --]

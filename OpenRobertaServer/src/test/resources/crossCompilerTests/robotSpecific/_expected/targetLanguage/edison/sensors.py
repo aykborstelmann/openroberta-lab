@@ -31,7 +31,55 @@ def sensors():
     Ed.ReadRemote()
     Ed.ReadIRData()
 
+def sensorWaitUntil():
+    global ___numberVar, ___booleanVar, ___numberList
+    while True:
+        if (Ed.ReadKeypad() == Ed.KEYPAD_TRIANGLE) == True:
+            break
+        pass
+    while True:
+        if (Ed.ReadKeypad() == Ed.KEYPAD_ROUND) == True:
+            break
+        pass
+    while True:
+        if (_obstacleDetection(Ed.OBSTACLE_LEFT)) == True:
+            break
+        pass
+    while True:
+        if (_obstacleDetection(Ed.OBSTACLE_RIGHT)) == True:
+            break
+        pass
+    while True:
+        if (_obstacleDetection(Ed.OBSTACLE_AHEAD)) == True:
+            break
+        pass
+    while True:
+        if (_irSeek(1)) < 30:
+            break
+        pass
+    while True:
+        if (Ed.ReadLeftLightLevel() / 10) < 30:
+            break
+        pass
+    while True:
+        if (Ed.ReadRightLightLevel() / 10) < 30:
+            break
+        pass
+    while True:
+        if (Ed.ReadLineTracker() / 10) < 30:
+            break
+        pass
+    while True:
+        if (Ed.ReadLineState() == Ed.LINE_ON_BLACK) == True:
+            break
+        pass
+    while True:
+        if (Ed.ReadClapSensor() == Ed.CLAP_DETECTED) == True:
+            break
+        pass
+
 sensors()
+sensorWaitUntil()
 
 
 def _irSeek(mode):

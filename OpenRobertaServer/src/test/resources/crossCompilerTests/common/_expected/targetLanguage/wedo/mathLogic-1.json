@@ -145,8 +145,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -179,8 +179,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -213,8 +213,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -247,8 +247,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -281,8 +281,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -320,8 +320,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -359,8 +359,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -403,8 +403,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -451,8 +451,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -504,8 +504,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -548,8 +548,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -592,8 +592,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -636,8 +636,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -675,8 +675,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -714,8 +714,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -762,8 +762,8 @@
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "jump",
@@ -788,42 +788,12 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 169
+    "target": 163
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
-  },
-  {
-    "opc": "jump",
-    "conditional": false,
-    "target": 168
-  },
-  {
-    "opc": "expr",
-    "name": "r2",
-    "expr": "Var"
-  },
-  {
-    "opc": "expr",
-    "name": "r1",
-    "expr": "Var"
-  },
-  {
-    "op": "LT",
-    "opc": "expr",
-    "expr": "Binary"
-  },
-  {
-    "opc": "jump",
-    "conditional": "always",
-    "target": 169
-  },
-  {
-    "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -837,7 +807,7 @@
   {
     "opc": "jump",
     "conditional": false,
-    "target": 178
+    "target": 172
   },
   {
     "opc": "expr",
@@ -867,12 +837,12 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 179
+    "target": 173
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -886,7 +856,7 @@
   {
     "opc": "jump",
     "conditional": false,
-    "target": 205
+    "target": 199
   },
   {
     "opc": "expr",
@@ -998,12 +968,12 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 206
+    "target": 200
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",
@@ -1017,7 +987,7 @@
   {
     "opc": "jump",
     "conditional": false,
-    "target": 217
+    "target": 211
   },
   {
     "opc": "expr",
@@ -1055,12 +1025,12 @@
   {
     "opc": "jump",
     "conditional": "always",
-    "target": 218
+    "target": 212
   },
   {
     "opc": "expr",
-    "name": "b1",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {
     "opc": "AssignStmt",

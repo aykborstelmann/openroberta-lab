@@ -14,6 +14,7 @@ faceRecognitionModule = FaceRecognitionModule("faceRecognitionModule")
 from roberta import SpeechRecognitionModule
 speechRecognitionModule = SpeechRecognitionModule("speechRecognitionModule")
 speechRecognitionModule.pauseASR()
+h.sonar.subscribe("OpenRobertaApp")
 
 
 ___numberVar = 0
@@ -41,8 +42,8 @@ def sensors():
     h.say(str(faceRecognitionModule.detectFace()))
     h.say(str(faceRecognitionModule.getFaceInformation(___stringVar)))
     h.say(str(speechRecognitionModule.recognizeWordFromDictionary(___stringVar)))
-    h.say(str(h.gyrometer('x')))
-    h.say(str(h.gyrometer('y')))
+    h.say(str(h.gyrometer('no port')))
+    h.say(str(h.gyrometer('no port')))
     h.say(str(h.accelerometer('x')))
     h.say(str(h.accelerometer('y')))
     h.say(str(h.accelerometer('z')))
@@ -75,11 +76,187 @@ def sensors():
     h.say(str(h.getElectricCurrent('RAnklePitch')))
     h.say(str(h.getElectricCurrent('RAnkleRoll')))
 
+def sensorsWaitUntil():
+    global ___numberVar, ___booleanVar, ___stringVar, ___colourVar, ___numberList, ___booleanList, ___stringList, ___colourList
+    while True:
+        if h.touchsensors('head', 'front') == True:
+            break
+        h.wait(15)
+    while True:
+        if h.touchsensors('head', 'middle') == True:
+            break
+        h.wait(15)
+    while True:
+        if h.touchsensors('head', 'rear') == True:
+            break
+        h.wait(15)
+    while True:
+        if h.touchsensors('hand', 'left') == True:
+            break
+        h.wait(15)
+    while True:
+        if h.touchsensors('hand', 'right') == True:
+            break
+        h.wait(15)
+    while True:
+        if h.touchsensors('bumper', 'left') == True:
+            break
+        h.wait(15)
+    while True:
+        if h.touchsensors('bumper', 'right') == True:
+            break
+        h.wait(15)
+    while True:
+        if h.accelerometer('x') > 512:
+            break
+        h.wait(15)
+    while True:
+        if h.accelerometer('y') > 512:
+            break
+        h.wait(15)
+    while True:
+        if h.accelerometer('z') > 512:
+            break
+        h.wait(15)
+    while True:
+        if h.gyrometer('no port') > 90:
+            break
+        h.wait(15)
+    while True:
+        if h.gyrometer('no port') > 90:
+            break
+        h.wait(15)
+    while True:
+        if h.ultrasonic() < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.fsr('left') > 10:
+            break
+        h.wait(15)
+    while True:
+        if h.fsr('right') > 10:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('HeadYaw') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('HeadPitch') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LShoulderPitch') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LShoulderRoll') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RShoulderPitch') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RShoulderRoll') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LElbowYaw') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LElbowRoll') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RElbowYaw') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RElbowRoll') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LWristYaw') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RWristYaw') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LHand') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RHand') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LHipYawPitch') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LHipRoll') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LHipPitch') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RHipYawPitch') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RHipRoll') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RHipPitch') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LKneePitch') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RKneePitch') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LAnklePitch') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('LAnkleRoll') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RAnklePitch') < 30:
+            break
+        h.wait(15)
+    while True:
+        if h.getElectricCurrent('RAnkleRoll') < 30:
+            break
+        h.wait(15)
+    while True:
+        if faceRecognitionModule.detectFace() == "Roberta":
+            break
+        h.wait(15)
+    while True:
+        if h.getDetectedMark() == 84:
+            break
+        h.wait(15)
+
 
 def run():
     h.setAutonomousLife('ON')
     global ___numberVar, ___booleanVar, ___stringVar, ___colourVar, ___numberList, ___booleanList, ___stringList, ___colourList
     sensors()
+    sensorsWaitUntil()
 
 def main():
     try:
@@ -91,6 +268,7 @@ def main():
         h.mark.unsubscribe("RobertaLab")
         faceRecognitionModule.unsubscribe()
         speechRecognitionModule.unsubscribe()
+        h.sonar.unsubscribe("OpenRobertaApp")
         h.myBroker.shutdown()
 
 if __name__ == "__main__":

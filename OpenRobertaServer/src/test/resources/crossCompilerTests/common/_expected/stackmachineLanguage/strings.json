@@ -27,9 +27,23 @@
     "-": ["n?C*L4%#L;x!!!SLfObY"]
   },
   {
+    "opc": "expr",
+    "expr": "NUM_CONST",
+    "+": ["!U@ThMe}?(%j;Rnjl!ez"],
+    "-": ["J^.(Y~~8CfH2];Af;eO0"],
+    "value": "0"
+  },
+  {
+    "opc": "VarDeclaration",
+    "name": "number",
+    "+": ["F]ENk()%+Ge6b=%FJA_Q"],
+    "type": "NUMBER",
+    "-": ["!U@ThMe}?(%j;Rnjl!ez"]
+  },
+  {
     "opc": "comment",
     "+": [".hJO{w6(^~mQEq}.8J=n"],
-    "-": ["J^.(Y~~8CfH2];Af;eO0"],
+    "-": ["F]ENk()%+Ge6b=%FJA_Q"],
     "value": "String Concat -- Start --"
   },
   {
@@ -482,7 +496,7 @@
     "opc": "jump",
     "conditional": false,
     "-": ["Q!g{v%|ISrSJ7`q]yWv6"],
-    "target": 74
+    "target": 76
   },
   {
     "opc": "expr",
@@ -494,7 +508,7 @@
     "opc": "jump",
     "conditional": "always",
     "-": ["9s+4GX_/{!SrUCtzKyJ/"],
-    "target": 75
+    "target": 77
   },
   {
     "opc": "expr",
@@ -511,9 +525,84 @@
     ]
   },
   {
+    "opc": "expr",
+    "name": "text",
+    "expr": "Var",
+    "+": ["m(8.=R6nh{(9]-|{CM.w"],
+    "-": ["=!PJFM4xx1fNBM1Wiv9P"]
+  },
+  {
+    "opc": "expr",
+    "expr": "textStringCastNumberFunct",
+    "-": ["m(8.=R6nh{(9]-|{CM.w"]
+  },
+  {
+    "opc": "AssignStmt",
+    "name": "number",
+    "+": ["0ef)N0a,^sPSAgW@mZZ;"]
+  },
+  {
+    "opc": "expr",
+    "name": "text",
+    "expr": "Var",
+    "+": ["83iFwnFV}xh+Hv1JGB,A"],
+    "-": ["0ef)N0a,^sPSAgW@mZZ;"]
+  },
+  {
+    "opc": "expr",
+    "expr": "NUM_CONST",
+    "+": ["-ft5*(5~j,YsIoT+8!oS"],
+    "-": ["83iFwnFV}xh+Hv1JGB,A"],
+    "value": "0"
+  },
+  {
+    "opc": "expr",
+    "expr": "textCharCastNumberFunct",
+    "-": ["-ft5*(5~j,YsIoT+8!oS"]
+  },
+  {
+    "opc": "AssignStmt",
+    "name": "number",
+    "+": ["R7FSi24ba;XHJ/{AwlS["]
+  },
+  {
+    "opc": "expr",
+    "expr": "NUM_CONST",
+    "+": ["U6N}R_YkC,4{^@PvH`8c"],
+    "-": ["R7FSi24ba;XHJ/{AwlS["],
+    "value": "10"
+  },
+  {
+    "opc": "expr",
+    "expr": "mathCastStringFunct",
+    "-": ["U6N}R_YkC,4{^@PvH`8c"]
+  },
+  {
+    "opc": "AssignStmt",
+    "name": "text",
+    "+": ["uB-sf~OJvB]K2^uB2!0Q"]
+  },
+  {
+    "opc": "expr",
+    "expr": "NUM_CONST",
+    "+": ["cLF598ewc^n`j-Ztlr#;"],
+    "-": ["uB-sf~OJvB]K2^uB2!0Q"],
+    "value": "30"
+  },
+  {
+    "opc": "expr",
+    "expr": "mathCastCharFunct",
+    "-": ["cLF598ewc^n`j-Ztlr#;"]
+  },
+  {
+    "opc": "AssignStmt",
+    "name": "text",
+    "+": [":%!QXs*=2T6VNBtr,^c4"]
+  },
+  {
     "opc": "comment",
     "+": [".#P4~av!?:AcCaBg}t^u"],
-    "-": ["=!PJFM4xx1fNBM1Wiv9P"],
+    "-": [":%!QXs*=2T6VNBtr,^c4"],
     "value": "String Concat -- End --"
   },
   {

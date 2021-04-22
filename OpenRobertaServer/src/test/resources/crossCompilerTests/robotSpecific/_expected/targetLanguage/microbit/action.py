@@ -1,6 +1,7 @@
 import microbit
 import random
 import math
+import music
 
 class BreakOutOfALoop(Exception): pass
 class ContinueLoop(Exception): pass
@@ -19,6 +20,7 @@ def action():
     global timer1, ___numberVar, ___booleanVar, ___stringVar, ___imageVar, ___numberList, ___booleanList, ___stringList, ___imageList
     display()
     pin()
+    play()
 
 def display():
     global timer1, ___numberVar, ___booleanVar, ___stringVar, ___imageVar, ___numberList, ___booleanList, ___stringList, ___imageList
@@ -36,6 +38,14 @@ def display():
     print(___numberVar)
     print(___booleanVar)
     print(___stringVar)
+
+def play():
+    global timer1, ___numberVar, ___booleanVar, ___stringVar, ___imageVar, ___numberList, ___booleanList, ___stringList, ___imageList
+    music.pitch(300, 100)
+    music.pitch(400, 50)
+    music.pitch(130, 2000)
+    music.pitch(146, 1000)
+    music.pitch(164, 500)
 
 def pin():
     global timer1, ___numberVar, ___booleanVar, ___stringVar, ___imageVar, ___numberList, ___booleanList, ___stringList, ___imageList

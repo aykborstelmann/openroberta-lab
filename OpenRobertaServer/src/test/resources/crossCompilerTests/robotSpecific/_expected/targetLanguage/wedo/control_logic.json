@@ -691,8 +691,8 @@
   },
   {
     "opc": "expr",
-    "name": "boolVar",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": false
   },
   {"opc": "ShowTextAction"},
   {
@@ -717,8 +717,8 @@
   },
   {
     "opc": "expr",
-    "name": "boolVar",
-    "expr": "Var"
+    "expr": "BOOL_CONST",
+    "value": true
   },
   {"opc": "ShowTextAction"},
   {

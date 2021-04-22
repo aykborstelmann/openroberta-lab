@@ -8,14 +8,17 @@
 MicroBit _uBit;
 
 
+
 ManagedString ___text;
 ManagedString ___eight;
+double ___number;
 
 int main()
 {
     _uBit.init();
     ___text = ManagedString("start:");
     ___eight = ManagedString(" eight");
+    ___number = 0;
     
     // String Concat -- Start --
     ___text = ___text + ManagedString(ManagedString(" one"));
@@ -32,6 +35,11 @@ int main()
     _uBit.serial.setTxBufferSize(ManagedString((( ( ManagedString("start: one two three456 seven eight nine ten eleven twelve") == ___text ) ? ( ManagedString("String Concat SUCCESS") ) : ( ManagedString("String Concat FAIL")) ))).length() + 2);
     _uBit.serial.send(ManagedString(( ( ManagedString("start: one two three456 seven eight nine ten eleven twelve") == ___text ) ? ( ManagedString("String Concat SUCCESS") ) : ( ManagedString("String Concat FAIL")) )) + "\r\n", MicroBitSerialMode::ASYNC);
     _uBit.sleep(_ITERATION_SLEEP_TIMEOUT);
+    ___number = std::atof((___text).toCharArray());
+    ___number = (int)(___text.charAt(0));
+    ___text = ManagedString(10);
+    ___text = ManagedString((char)(30));
     // String Concat -- End --
     release_fiber();
 }
+

@@ -58,6 +58,7 @@
   {
     "opc": "jump",
     "conditional": false,
+    "-": ["ts(L~%Ks#%lm#boZoD=J"],
     "target": 46
   },
   {
@@ -86,6 +87,7 @@
     "opc": "expr",
     "expr": "NUM_CONST",
     "+": [",O[h]Vs0@`ovr7dM+ZNn"],
+    "-": ["w*LL6KdX,)D:XXh4A|U^"],
     "value": "11"
   },
   {
@@ -125,6 +127,7 @@
     "opc": "expr",
     "expr": "NUM_CONST",
     "+": ["gwQGAE(=P-ATo61EDqDW"],
+    "-": ["]BMR2jHG1pABf#ncxbAP"],
     "value": "2"
   },
   {
@@ -197,6 +200,7 @@
   {
     "opc": "expr",
     "expr": "NUM_CONST",
+    "+": ["]BMR2jHG1pABf#ncxbAP"],
     "-": ["[U_1X6iStpxbDBAZzvL4"],
     "value": "1"
   },
@@ -208,7 +212,8 @@
   {
     "op": "ADD",
     "opc": "expr",
-    "expr": "Binary"
+    "expr": "Binary",
+    "-": ["]BMR2jHG1pABf#ncxbAP"]
   },
   {
     "opc": "AssignStmt",
@@ -234,12 +239,14 @@
     "opc": "expr",
     "name": "i",
     "expr": "Var",
+    "+": ["w*LL6KdX,)D:XXh4A|U^"],
     "-": ["6:C|%l!C!:iJ?[]4kX;f"]
   },
   {
     "op": "ADD",
     "opc": "expr",
-    "expr": "Binary"
+    "expr": "Binary",
+    "-": ["w*LL6KdX,)D:XXh4A|U^"]
   },
   {
     "opc": "AssignStmt",
@@ -342,6 +349,7 @@
     "opc": "expr",
     "expr": "NUM_CONST",
     "+": ["P]K6idI?DdxLG!v%U(/("],
+    "-": ["4^M_vXLl#AI,otu@u0}/"],
     "value": "4"
   },
   {
@@ -443,6 +451,7 @@
     "opc": "expr",
     "expr": "NUM_CONST",
     "+": ["m@RCXZY}(.)RZ]t%wa/j"],
+    "-": ["2~(FmsKNb/[o?Z]=[*vZ"],
     "value": "5"
   },
   {
@@ -486,12 +495,14 @@
     "opc": "expr",
     "name": "k",
     "expr": "Var",
+    "+": ["2~(FmsKNb/[o?Z]=[*vZ"],
     "-": ["K3{?xq=uPWL:A|{KK5XL"]
   },
   {
     "op": "ADD",
     "opc": "expr",
-    "expr": "Binary"
+    "expr": "Binary",
+    "-": ["2~(FmsKNb/[o?Z]=[*vZ"]
   },
   {
     "opc": "AssignStmt",
@@ -517,12 +528,14 @@
     "opc": "expr",
     "name": "j",
     "expr": "Var",
+    "+": ["4^M_vXLl#AI,otu@u0}/"],
     "-": ["*]8.UGzjGt3HaTX~Y|!1"]
   },
   {
     "op": "ADD",
     "opc": "expr",
-    "expr": "Binary"
+    "expr": "Binary",
+    "-": ["4^M_vXLl#AI,otu@u0}/"]
   },
   {
     "opc": "AssignStmt",

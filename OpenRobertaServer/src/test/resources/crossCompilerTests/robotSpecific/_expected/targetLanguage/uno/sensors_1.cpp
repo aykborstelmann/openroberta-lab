@@ -93,6 +93,7 @@ void sensors() {
     Serial.println(analogRead(_output_L2)/10.24);
     Serial.println(_getIRValue(_irrecv_I));
     Serial.println(_dht_L3.readHumidity());
+    Serial.println(map(analogRead(_TMP36_T2), 0, 410, -50, 150));
     Serial.println(analogRead(_S_T3)/10.24);
     Serial.println(analogRead(_SensorPin_P));
     Serial.println(((double)analogRead(_output_P2))*5/1024);
