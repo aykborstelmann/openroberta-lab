@@ -1,7 +1,9 @@
 # Instructions to setup and run the test and prod server using DOCKER container (2020-06-08)
 
-This text describes the docker-related scripts, that are used to setup a docker network, create docker images and run docker container of the OpenRoberta lab. Exactly these
-scripts are used to run OpenRoberta's prod and test servers. On every Linux-based machine it should be easy to run our setup. To create an instance of our docker installation,
+This text is for *developer* and *maintainer* of the openroberta lab, *not* if you want to run a local server. Running a local server is described in our wiki
+https://jira.iais.fraunhofer.de/wiki/display/ORInfo/Stand+alone+Server. This text describes the docker-related scripts, that are used to setup a docker network,
+create docker images and run docker container of the OpenRoberta lab. They are used to run OpenRoberta's prod and test servers. On every Linux-based machine it
+should be easy to run our setup. Windows 10 should works too, if you are careful with pathes. To create an instance of our docker installation,
 clone the openroberta-lab git and run `./ora.sh new-docker-setup <BASEDIR_MUST_NOT_EXIST>`. Follow the instructions
 from the script. From this point use the the administration script `<BASEDIR>/scripts/run.sh` (abbreviated as `RUN`). Execute `RUN` without parameters to get a message
 explaining all commands available. You have to
@@ -19,19 +21,13 @@ explaining all commands available. You have to
 Looks more complicated as it is :-). Details of the file system structure used and the more functionality supported (database backup, alice checking, autorestart) are described later.
 I tried to make all scripts as robust as possible. Please mail any problems, improvements, ideas to reinhard.budde at iais.fraunhofer.de
 
-We generate docker images for different architectures. Currently we support
+We can generate docker images for different architectures. Currently we support
 
 * `x64` - the standard architecture. Our prod server, your laptop, ... use this architecture
-* `arm32v7` - the architecture used by Raspberry pi's 3 and 4, for example. These "small" devices can run a docker demon, a database container and a
+* `arm32v7` - the architecture used by Raspberry pi's 3 and 4. These "small" devices can run a docker demon, a database and a
   jetty-based rest-server without performance problems. We support these devices to run local servers: for privacy reasons, bad iternet connectivity, ... .
   
-In the following the shell variable `ARCH` refers to either `x64` or `arm32v7`. The architecture is auto-detected by the `RUN` script.
-
-Docker must be installed. Google for it, usually the job is done by executing
-
-```bash
-curl -sSL get.docker.com | sh
-```
+In the following the shell variable `ARCH` refers to either `x64` or `arm32v7`. Docker must be installed. Google how to do this.
 
 # (re-)create the base image (done from time to time)
 
@@ -49,10 +45,10 @@ the `openroberta/base-${ARCH}` image is derived. This occurs much more often. Bo
 
 ```bash
 BASE_DIR=/data/openroberta-lab
-ARCH=x64 # either x64 or arm32v7
+ARCH=x64             # either x64 or arm32v7
 CCBIN_VERSION=1
 
-cd ${BASE_DIR}/conf/${ARCH}/docker-for-meta-1-cc-binaries
+cd ${BASE_DIR}/conf/${ARCH}/1-cc-binaries
 docker build --no-cache -t openroberta/ccbin-${ARCH}:${CCBIN_VERSION} .
 docker push openroberta/ccbin-${ARCH}:${CCBIN_VERSION}
 ```
@@ -64,8 +60,8 @@ Do _not_ forget, to increase the version numer in the next section, too.
 
 ```bash
 BASE_DIR=/data/openroberta-lab
-ARCH=x64 # either x64 or arm32v7
-CCBIN_VERSION=1 # this is needed in the dockerfile!
+ARCH=x64             # either x64 or arm32v7
+CCBIN_VERSION=1      # this is needed in the dockerfile!
 BASE_VERSION=26
 CC_RESOURCES=/data/openroberta-lab/git/ora-cc-rsc
 cd $CC_RESOURCES
@@ -73,10 +69,10 @@ cd $CC_RESOURCES
 git checkout develop; git pull; git checkout master; git pull
 git checkout tags/${BASE_VERSION}
 
-mvn clean install # necessary to create the update resources for ev3- and arduino-based systems
+mvn clean install    # necessary to create the update resources for ev3- and arduino-based systems
 docker build --no-cache -t openroberta/base-${ARCH}:${BASE_VERSION} \
        --build-arg CCBIN_VERSION=${CCBIN_VERSION} \
-       -f $BASE_DIR/conf/${ARCH}/docker-for-meta-2-cc-resources/Dockerfile .
+       -f $BASE_DIR/conf/${ARCH}/2-cc-resources/Dockerfile .
 docker push openroberta/base-${ARCH}:${BASE_VERSION}
 ```
 
@@ -102,7 +98,7 @@ BASE_VERSION=26
 GITREPO=https://github.com/OpenRoberta/openroberta-lab.git       # this is the URL of the official repo, you may use your fork
 BRANCH=develop                                                   # the branch used to fill the maven cache
 IMAGE_NAME=openroberta/it-${ARCH}-offical-gitrepo-with-develop   # change the name SUFFIX when using a forked repo
-cd ${BASE_DIR}/conf/${ARCH}/docker-for-test
+cd ${BASE_DIR}/conf/${ARCH}/3-runIT
 docker build --no-cache --build-arg BASE_VERSION=${BASE_VERSION} --build-arg GITREPO="${GITREPO}" --build-arg BRANCH="${BRANCH}" \
        -t ${IMAGE_NAME}:${BASE_VERSION} .
 docker push ${IMAGE_NAME}:${BASE_VERSION}
@@ -118,6 +114,54 @@ export GITREPO='https://github.com/OpenRoberta/openroberta-lab.git' # the repo U
 export BRANCH='develop'
 docker run "${IMAGE_NAME}" "${GITREPO}" "${BRANCH}"
 ```
+
+### step 4 image for a standalone lab
+
+This creates an image, that can be used for a standalone server. The data base is embedded. Select carefully
+* the branch: it should be master
+* the VERSION: it will become the tag on dockerhub and thus be pulled from dockerhub when people start a local server. *Never* re-use a version number!
+* the git repo: it is definitively changed and the required branch is checked out, independant from its old state.
+
+```bash
+BASE_DIR='/data/openroberta-lab'
+GIT_REPO='openroberta-lab'                  # ${BASE_DIR}/git/${GIT_REPO} must be a git repo where branches can be added and deleted at will
+ARCH=x64                                    # either x64 or arm32v7
+BASE_VERSION=26
+EXPORT_DIR='/tmp/openroberta-lab-export'    # my choice, directory must not exist, is deleted at the end of this script
+VERSION='4.1.2'                             # becomes the TAG of the image generated
+BRANCH=master                               # the current master should be used for standalones
+IMAGE_NAME=openroberta/standalone-${ARCH}:${VERSION}
+
+cd ${BASE_DIR}/git/${GIT_REPO}
+# taken from the script scripts/helper/_gen.sh. Update the lines below, if this script is changed!
+echo "checking out branch '${BRANCH}'. Throw away the complete old state"
+git fetch --all
+git reset --hard
+git clean -fd
+# goto a branch different from the one to be checked out. Otherwise the -D will fail. Then checkout the branch, connect to the remote implicitly
+case "${BRANCH}" in
+  develop) git checkout master ;;
+  *)       git checkout develop ;;
+esac
+git branch -D ${BRANCH}
+git checkout ${BRANCH}
+LAST_COMMIT=$(git rev-list HEAD...HEAD~1)   # get the last commit for documentation
+
+mvn clean install -DskipTests
+./ora.sh export ${EXPORT_DIR} gzip          # export the build
+
+cd ${EXPORT_DIR}
+export MSYS_NO_PATHCONV=1                   # if you using git bash on windows10 you need this
+cp ${BASE_DIR}/conf/y-standalone-lab/* .
+FROM="openroberta/base-${ARCH}:${BASE_VERSION}"
+docker build --no-cache --tag ${IMAGE_NAME} --build-arg FROM=${FROM} .
+docker push ${IMAGE_NAME}
+cd ${BASE_DIR}
+echo rm -Ir ${EXPORT_DIR}
+rm -Ir ${EXPORT_DIR}
+```
+
+Note: the commands above should be refactored, it'a a bit confusing :-)
 
 # Operating Instructions for the Test and Prod Server
 
