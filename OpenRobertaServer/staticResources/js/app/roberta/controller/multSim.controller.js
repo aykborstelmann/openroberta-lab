@@ -57,12 +57,12 @@ define(['exports', 'message', 'util', 'progList.model', 'program.controller', 'p
                     data: dataarr
                 });
                 $("#loadMultipleSimPrograms").off();
-                $("#loadMultipleSimPrograms").on("click", function() {
+                $("#loadMultipleSimPrograms").onWrap("click", function() {
                     var selections = $("#multipleRobotsTable").bootstrapTable('getSelections');
                     var selectedprograms = [];
                     for (var i = 0; i < selections.length; i++) {
                         var tempfind = result.programNames.filter(function(ele) {
-                            return selections[i].name === ele[0];
+                            return selections[i].name === ele[0] && selections[i].creator === ele[1];
                         })[0];
                         selectedprograms.push(tempfind);
                     }

@@ -10,17 +10,22 @@ import de.fhg.iais.roberta.syntax.actors.arduino.sensebox.SendDataAction;
 import de.fhg.iais.roberta.syntax.sensors.arduino.sensebox.EnvironmentalSensor;
 import de.fhg.iais.roberta.syntax.sensors.arduino.sensebox.GpsSensor;
 import de.fhg.iais.roberta.util.dbc.DbcException;
-import de.fhg.iais.roberta.visitor.hardware.actor.*;
+import de.fhg.iais.roberta.visitor.hardware.actor.IDisplayVisitor;
+import de.fhg.iais.roberta.visitor.hardware.actor.ILightVisitor;
+import de.fhg.iais.roberta.visitor.hardware.actor.IMotorVisitor;
+import de.fhg.iais.roberta.visitor.hardware.actor.IPinVisitor;
+import de.fhg.iais.roberta.visitor.hardware.actor.ISerialVisitor;
+import de.fhg.iais.roberta.visitor.hardware.actor.ISimpleSoundVisitor;
 import de.fhg.iais.roberta.visitor.hardware.sensor.ISensorVisitor;
 
 public interface IArduinoVisitor<V>
-    extends IMotorVisitor<V>, IDisplayVisitor<V>, ISoundVisitor<V>, ILightVisitor<V>, ISensorVisitor<V>, ISerialVisitor<V>, IPinVisitor<V>, INeuralNetworkVisitor<V>, INano33BleSensorVisitor<V> {
+    extends IMotorVisitor<V>, IDisplayVisitor<V>, ISimpleSoundVisitor<V>, ILightVisitor<V>, ISensorVisitor<V>, ISerialVisitor<V>, IPinVisitor<V>, INeuralNetworkVisitor<V>, INano33BleSensorVisitor<V> {
 
     default V visitRelayAction(RelayAction<V> relayAction) {
         throw new DbcException("Block is not implemented!");
     }
 
-    default V visitDataSendAction(SendDataAction<V> sendDataAction) {
+    default V visitSendDataAction(SendDataAction<V> sendDataAction) {
         throw new DbcException("Block is not implemented!");
     }
 

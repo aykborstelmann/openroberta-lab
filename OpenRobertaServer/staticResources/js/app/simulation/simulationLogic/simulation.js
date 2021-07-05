@@ -380,8 +380,7 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
         let selectedObject = selectedObstacle >= 0 ? obstacleList[selectedObstacle] : selectedColorArea >= 0 ? colorAreaList[selectedColorArea] : null;
         if (selectedObject != null) {
             selectedObject.color = color;
-            updateColorAreaLayer();
-            updateObstacleLayer();
+            updateSelectedObjects();
         }
     }
 
@@ -406,7 +405,7 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
         for (var i = 0; i < numRobots; i++) {
             robots[i].reset();
         }
-        reloadProgram();
+        resetButtons();
 
         if (debugMode) {
             for (var i = 0; i < numRobots; i++) {
@@ -476,14 +475,23 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
     };
 
     function callbackOnTermination() {
-        if (!robots[0].endless && allInterpretersTerminated()) {
-            if (debugMode) {
-                $('#simControl').addClass('typcn-media-play-outline').removeClass('typcn-play');
-                $('#simStop').removeClass("disabled");
-            } else {
-                $('#simControl').addClass('typcn-media-play-outline').removeClass('typcn-media-stop');
-                $('#simControl').attr('data-original-title', Blockly.Msg.MENU_SIM_START_TOOLTIP);
+        if (allInterpretersTerminated()) {
+            if (!robots[0].endless) {
+                if (debugMode) {
+                    $('#simControl').addClass('typcn-media-play-outline').removeClass('typcn-play');
+                    $('#simStop').removeClass("disabled");
+                } else {
+                    $('#simControl').addClass('typcn-media-play-outline').removeClass('typcn-media-stop');
+                    $('#simControl').attr('data-original-title', Blockly.Msg.MENU_SIM_START_TOOLTIP);
+                }
+            } else if (debugMode) {
+                if (!$('#simStop').hasClass("disabled")) {
+                    $('#simStop').hide();
+                    $('#simControl').addClass('typcn-media-stop').removeClass('typcn-media-play').removeClass('blue');
+                    $('#simControl').attr('data-original-title', Blockly.Msg.MENU_SIM_STOP_TOOLTIP);
+                }
             }
+
         }
         console.log("END of Sim");
     }
@@ -565,7 +573,7 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
                     robots[i].reset();
                 }
             }
-            reloadProgram();
+            resetButtons();
         }
 
     }
@@ -700,9 +708,9 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
         return true;
     }
 
-    function reloadProgram() {
+    function resetButtons() {
         if (debugMode) {
-            $('#simControl').addClass('typcn-media-play').removeClass('typcn-play-outline');
+            $('#simControl').addClass('typcn-media-play-outline').removeClass('typcn-media-play');
             $('#simStop').addClass("disabled");
         } else {
             $('#simControl').addClass('typcn-media-play-outline').removeClass('typcn-media-stop');
@@ -1104,6 +1112,7 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
         if (!downRuler && rulerIsDown) {
             downRuler = true;
             selectedRobot = -1;
+            highLightCorners = [];
             if (selectedObstacle >= 0) {
                 selectedObstacle = -1;
                 updateObstacleLayer();
@@ -1113,7 +1122,6 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
                 updateColorAreaLayer();
             }
             downCorner = -1;
-            highLightCorners = [];
             return;
         }
         if (selectedObstacle >= 0) {
@@ -1510,8 +1518,7 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
         if (zoom) {
             scene.resizeBackgrounds(scale);
             scene.drawRuler();
-            scene.drawObstacles(highLightCorners);
-            scene.drawColorAreas(highLightCorners);
+            updateSelectedObjects();
             e.stopPropagation();
         }
     }
@@ -1531,10 +1538,24 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
             var scaleY = scene.playground.h / (ground.h + 20);
             scale = Math.min(scaleX, scaleY) - 0.05;
             scene.resizeBackgrounds(scale);
-            scene.drawObstacles(highLightCorners);
-            scene.drawColorAreas(highLightCorners);
             scene.drawRuler();
+            updateSelectedObjects();
         }
+    }
+
+    function updateSelectedObjects() {
+        if (selectedObstacle >= 0) {
+            scene.drawColorAreas([]);
+            updateObstacleLayer();
+            return;
+        }
+        if (selectedColorArea >= 0) {
+            scene.drawObstacles([]);
+            updateColorAreaLayer();
+            return;
+        }
+        scene.drawObstacles([]);
+        scene.drawColorAreas([]);
     }
 
     function addMouseEvents() {
@@ -1604,20 +1625,16 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
         $("#robotLayer").off();
         $("#simDiv").off();
         $("#canvasDiv").off();
-        $("#simRobotModal").off();
         $("#robotIndex").off();
         $("#blocklyDiv").off("click touchstart", setFocusBlocklyDiv);
     }
 
     function initScene() {
         scene = new Scene(imgObjectList[currentBackground], robots, imgPattern, ruler);
-        scene.drawObstacles(highLightCorners);
-        scene.drawColorAreas(highLightCorners);
-        scene.drawRuler();
         scene.drawRobots();
+        resetSelection();
         addMouseEvents();
         disableChangeObjectButtons();
-
         if (robots[0].colorRange) {
             colorpicker = new HUEBEE('#colorpicker', {
                 shades: 1,
@@ -1683,7 +1700,7 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
     function importConfigData() {
         $('#backgroundFileSelector').val(null);
         $('#backgroundFileSelector').attr("accept", ".json");
-        $('#backgroundFileSelector').trigger('click'); // opening dialog
+        $('#backgroundFileSelector').clickWrap(); // opening dialog
         $('#backgroundFileSelector').change(function(event) {
             var file = event.target.files[0];
             var reader = new FileReader();
@@ -1848,7 +1865,7 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
     function importImage() {
         $('#backgroundFileSelector').val(null);
         $('#backgroundFileSelector').attr("accept", ".png, .jpg, .jpeg, .svg");
-        $('#backgroundFileSelector').trigger('click'); // opening dialog
+        $('#backgroundFileSelector').clickWrap(); // opening dialog
         $('#backgroundFileSelector').change(function(event) {
             var file = event.target.files[0];
             var reader = new FileReader();

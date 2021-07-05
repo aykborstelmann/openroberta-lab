@@ -340,7 +340,7 @@ public class Administration {
     @SuppressWarnings("unused")
     private String xml2Ast2xml(String updatedProgram) throws Exception, JAXBException {
         BlockSet program = JaxbHelper.xml2BlockSet(updatedProgram);
-        Jaxb2ProgramAst<Void> transformer = new Jaxb2ProgramAst<>(null);
+        Jaxb2ProgramAst<Void> transformer = new Jaxb2ProgramAst(null);
         BlockSet blockSet = astToJaxb(transformer.blocks2Ast(program).getTree());
         return jaxbToXml(blockSet);
     }

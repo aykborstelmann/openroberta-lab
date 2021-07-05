@@ -92,7 +92,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'progList.model
                 height : UTIL.calcDataTableHeight()
             });
         });
-        $tabProgList.on('show.bs.tab', function(e) {
+        $tabProgList.onWrap('show.bs.tab', function(e) {
             guiStateController.setView('tabProgList');
             $programNameTable.bootstrapTable("load", []);
             $userGroupSelect.hide();
@@ -110,9 +110,9 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'progList.model
                     });
                 }
             }
-        });
+        }, 'show prog list');
 
-        $tabProgList.on('shown.bs.tab', function(e) {
+        $tabProgList.onWrap('shown.bs.tab', function(e) {
             switch ($tabProgList.data('type')) {
                 case 'userProgram':
                     PROGLIST.loadProgList(update);
@@ -121,7 +121,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'progList.model
                 default:
                     PROGLIST.loadExampleList(updateExamplePrograms);
             }
-        });
+        }, 'shown prog list');
 
         $progList.find('button[name="refresh"]').onWrap('click', function() {
             switch ($tabProgList.data('type')) {
@@ -134,7 +134,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'progList.model
                     PROGLIST.loadExampleList(updateExamplePrograms);
             }
             return false;
-        }, "refresh program list clicked");
+        }, 'refresh prog list');
         
         $userGroupSelect.change(function(evt) {
             if ($tabProgList.data('type') !== 'userProgram') {
@@ -182,7 +182,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'progList.model
         }, 'uncheck one program');
 
         $('#backProgList').onWrap('click', function() {
-            $('#tabProgram').trigger('click');
+            $('#tabProgram').clickWrap();
             return false;
         }, "back to program view")
 
@@ -213,7 +213,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'progList.model
                 $('.deleteSomeProg').show();
               } else {
                 if (result.cmd === "loadPN") {
-                    $('#backProgList').click();
+                    $('#backProgList').clickWrap();
                 }
             }
 
@@ -241,7 +241,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'progList.model
             $('.deleteSomeProg').hide();
         } else {
             if (result.cmd === "loadPN") {
-                $('#backProgList').click();
+                $('#backProgList').clickWrap();
             }
         }
         $('#programNameTable').find('.load').attr('data-original-title', Blockly.Msg.PROGLIST_LOAD_TOOLTIP
@@ -473,7 +473,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'progList.model
                     // TODO review this in 4 weeks and remove it if possible                         
                     checkMissingInformaton(result);
                 });
-                $('#tabProgram').trigger('click');
+                $('#tabProgram').clickWrap();
 
             }
             MSG.displayInformation(result, "", result.message);

@@ -120,7 +120,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'guiState.contr
             });
         });
 
-        $('#tabGalleryList').on('show.bs.tab', function(e) {
+        $('#tabGalleryList').onWrap('show.bs.tab', function(e) {
             $('#filterRobot').val(GUISTATE_C.getRobotGroup());
             guiStateController.setView('tabGalleryList');
             if ($('#galleryTable').bootstrapTable("getData").length === 0) {
@@ -129,11 +129,11 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'guiState.contr
             loadGalleryData();
         });
 
-        $('#tabGalleryList').on('shown.bs.tab', function(e) {
+        $('#tabGalleryList').onWrap('shown.bs.tab', function(e) {
             $(window).trigger("resize");
         });
 
-        $('#galleryTable').on('all.bs.table', function(e) {
+        $('#galleryTable').onWrap('all.bs.table', function(e) {
             configureTagsInput();
         });
 
@@ -147,7 +147,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'guiState.contr
         }, "Load program from gallery double clicked");
 
         $('#backGalleryList').onWrap('click', function() {
-            $('#tabProgram').trigger('click');
+            $('#tabProgram').clickWrap();
             return false;
         }, "back to program view");
 
@@ -167,7 +167,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'message', 'guiState.contr
             });
         });
 //        TODO reactivate this once the table-view is improved
-//        $('#toogleView').click(function (e) {
+//        $('#toogleView').clickWrap(function (e) {
 //            // toggle button icon
 //            var iconClassName = '';
 //            if (currentViewMode === 'gallery') {

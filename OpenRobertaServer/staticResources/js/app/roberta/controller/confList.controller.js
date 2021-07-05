@@ -85,7 +85,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'confList.model', 'configu
                 height : UTIL.calcDataTableHeight()
             });
         });
-        $('#tabConfList').on('show.bs.tab', function(e) {
+        $('#tabConfList').onWrap('show.bs.tab', function(e) {
             guiStateController.setView('tabConfList');
             CONFLIST.loadConfList(update);
         });
@@ -135,7 +135,7 @@ define([ 'require', 'exports', 'log', 'util', 'comm', 'confList.model', 'configu
         }, 'uncheck one configuration');
 
         $('#backConfList').onWrap('click', function() {
-            $('#tabConfiguration').trigger('click');
+            $('#tabConfiguration').clickWrap();
             return false;
         }, "back to configuration view");
 

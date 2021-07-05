@@ -58,7 +58,7 @@ define([ 'exports', 'comm', 'message', 'log', 'util', 'guiState.controller', 'ro
             'axis' : 'x',
             'cursor' : 'col-resize'
         });
-        $('#tabProgram').on('click', function(e) {
+        $('#tabProgram').onWrap('click', function(e) {
             e.preventDefault();
             if (GUISTATE_C.getView() === 'tabConfiguration' && GUISTATE_C.isUserLoggedIn() && !GUISTATE_C.isConfigurationSaved()
                     && !GUISTATE_C.isConfigurationAnonymous()) {
@@ -84,22 +84,22 @@ define([ 'exports', 'comm', 'message', 'log', 'util', 'guiState.controller', 'ro
                 $('#tabProgram').tab('show');
             }
         });
-        $('#tabProgram').on('show.bs.tab', function(e) {
+        $('#tabProgram').onWrap('show.bs.tab', function(e) {
             GUISTATE_C.setView('tabProgram');
         });
 
-        $('#tabProgram').on('shown.bs.tab', function(e) {
+        $('#tabProgram').onWrap('shown.bs.tab', function(e) {
             blocklyWorkspace.markFocused();
             blocklyWorkspace.setVisible(true);
-            if (!seen) { // TODO may need to be removed if program tab can recieve changes while in background
+            if (!seen) { // TODO may need to be removed if program tab can receive changes while in background
                 reloadView();
             }
             $(window).resize();
         });
-        $('#tabProgram').on('hide.bs.tab', function(e) {
+        $('#tabProgram').onWrap('hide.bs.tab', function(e) {
             Blockly.hideChaff();
         });
-        $('#tabProgram').on('hidden.bs.tab', function(e) {
+        $('#tabProgram').onWrap('hidden.bs.tab', function(e) {
             blocklyWorkspace.setVisible(false);
         });
 
@@ -109,7 +109,7 @@ define([ 'exports', 'comm', 'message', 'log', 'util', 'guiState.controller', 'ro
             $('.levelTabs a[href="' + target + '"]').tab('show');
         });
 
-        $('.levelTabs a[data-toggle="tab"]').on('shown.bs.tab', function(e) {
+        $('.levelTabs a[data-toggle="tab"]').onWrap('shown.bs.tab', function(e) {
             var target = $(e.target).attr("href").substring(1); // activated tab
             e.preventDefault();
             loadToolbox(target);
@@ -230,7 +230,7 @@ define([ 'exports', 'comm', 'message', 'log', 'util', 'guiState.controller', 'ro
                         CONFIGURATION_C.reloadConf();
                         reloadProgram();
                     });
-                    $('#tabProgram').trigger('click');
+                    $('#tabProgram').clickWrap();
                 }
                 MSG.displayInformation(result, "", result.message);
             });
@@ -243,7 +243,7 @@ define([ 'exports', 'comm', 'message', 'log', 'util', 'guiState.controller', 'ro
         $formSingleModal = $('#single-modal-form');
         $('#buttonCancelFirmwareUpdateAndRun').onWrap('click', function() {
             start();
-        });
+        }, 'cancel firmware update and run');
     }
     exports.initProgramForms = initProgramForms;
 

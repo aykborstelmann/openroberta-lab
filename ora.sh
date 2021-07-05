@@ -86,7 +86,7 @@ do
                    shift; shift ;;
     -Xmx*)         XMX=$1
                    shift ;;
-    -rdbg|-rdg)    RDBG='-agentlib:jdwp=transport=dt_socket,server=y,address=8000,suspend=y' # -rdg was a typo, kept for compatibility
+    -rdbg)         RDBG='-agentlib:jdwp=transport=dt_socket,server=y,address=0.0.0.0:2000,suspend=y'
                    shift ;;
     -q)            QUIET='yes'
                    shift ;;
@@ -125,8 +125,8 @@ new-docker-setup) base_dir="$1"
                 fi
                 cp -r Docker/openroberta $base_dir
                 cp Docker/_README.md $base_dir
-                echo "New docker setup created in $base_dir. Edit 'decl.sh' and setup databases and servers now."
-                echo "Please read the first paragraph in `Docker/_README.md` !" ;;
+                echo 'New docker setup created in $base_dir. Edit `decl.sh` and setup databases and servers now.'
+                echo 'Please read the first paragraph in `Docker/_README.md` !' ;;
 
 new-server-in-docker-setup)
                 base_dir="$1"
