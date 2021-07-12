@@ -37,7 +37,7 @@ jobs:
   integration-tests:
     runs-on: ubuntu-latest
     container: openroberta/it-x64-offical-gitrepo-with-develop:25
-    if: ${{ github.ref == 'refs/heads/master'  || github.event.inputs.integration-tests == "true" }}
+    if: ${{ github.ref == 'refs/heads/master'  || github.event.inputs.integration-tests == 'true' }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
