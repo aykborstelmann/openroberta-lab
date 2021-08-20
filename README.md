@@ -1,5 +1,10 @@
+
 Open Roberta Lab
 ================
+
+[![Build](https://github.com/OpenRoberta/openroberta-lab/actions/workflows/build.yml/badge.svg)](https://github.com/OpenRoberta/openroberta-lab/actions/workflows/build.yml)
+[![Integration Tests](https://github.com/OpenRoberta/openroberta-lab/actions/workflows/integration.yml/badge.svg)](https://github.com/OpenRoberta/openroberta-lab/actions/workflows/integration.yml)
+
 
 ### Introduction
 

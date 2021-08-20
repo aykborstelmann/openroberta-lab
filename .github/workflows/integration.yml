@@ -1,0 +1,42 @@
+name: Integration Tests
+
+on:
+  schedule:
+    - cron: "0 0 * * *"
+  push:
+    tags:
+      - ORA-*
+  workflow_dispatch:
+
+jobs:
+  integration-test:
+    runs-on: ubuntu-latest
+    container: openroberta/base:25
+    steps:
+      - name: Determine branch
+        id: ref
+        # Checkout develop on nightly builds otherwise it would default to checkout master
+        run: |
+          if ${{ github.event_name == 'schedule' }}
+          then
+            echo "::set-output name=ref::refs/heads/develop"
+          else
+            echo "::set-output name=ref::${{ github.ref }}"
+          fi
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{steps.ref.outputs.ref}}
+      - name: Setup Java JDK 11
+        uses: actions/setup-java@v2.1.0
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: /root/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Build with Maven and run Integration Tests
+        run: mvn --batch-mode clean install -PrunIT
