@@ -1,0 +1,60 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+    branches: [ master, develop ]
+  workflow_dispatch:
+    inputs: 
+      integration-tests:
+        description: 'Run Integration Tests'
+        required: false
+        default: "false"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: Setup Java JDK 11
+        uses: actions/setup-java@v2.1.0
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+          
+      - name: Build with Maven
+        run: mvn --batch-mode clean install
+  
+  integration-tests:
+    runs-on: ubuntu-latest
+    container: openroberta/it-x64-offical-gitrepo-with-develop:25
+    if: ${{ github.ref == 'refs/heads/master'  || github.event.inputs.integration-tests == 'true' }}
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      
+      - name: Setup Java JDK 11
+        uses: actions/setup-java@v2.1.0
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+    
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+            
+      - name: Build with Maven
+        run: mvn --batch-mode clean install -PrunIT
