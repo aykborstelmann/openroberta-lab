@@ -85,11 +85,14 @@ jobs:
         run: echo ::set-output name=tag::${GITHUB_REF#refs/*/}
       - name: Create Release
         uses: ncipollo/release-action@v1
+        id: release
         with:
           tag: ${{ github.ref }}
           body: ${{steps.github_release.outputs.changelog}}
           token: ${{ secrets.GITHUB_TOKEN }}
           name: ${{ steps.tag.outputs.tag }}
           artifacts: "openrobertalab_binaries.zip"
+      - run: echo ${{ steps.release.outputs.upload_url }}
+        
       
     
