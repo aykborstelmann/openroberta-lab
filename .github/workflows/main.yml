@@ -86,7 +86,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Create Release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v1.1
         with:
           body: ${{steps.changelog.outputs.changelog}}
           files: openrobertalab_binaries.zip
