@@ -81,7 +81,7 @@ jobs:
       - name: Build binaries and zip it
         run: ./ora.sh export openrobertalab_binaries && zip -r openrobertalab_binaries.zip openrobertalab_binaries/ 
       - name: Changelog
-        uses: aykborstelmann/gh-issue-changelog@v1.1
+        uses: aykborstelmann/gh-issue-changelog@v1.2
         id: changelog
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
