@@ -37,7 +37,7 @@ jobs:
   integration-tests:
     runs-on: ubuntu-latest
     container: openroberta/it-x64-offical-gitrepo-with-develop:25
-    if: ${{ github.ref == 'refs/heads/master'  || github.event.inputs.integration-tests == 'true' }}
+    if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') || github.event.inputs.integration-tests == 'true' }}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -58,3 +58,28 @@ jobs:
             
       - name: Build with Maven
         run: mvn --batch-mode clean install -PrunIT
+  
+  release:
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    steps: 
+      - uses: actions/checkout@v2
+      - name: Setup Java JDK 11
+        uses: actions/setup-java@v2.1.0
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+          
+      - name: Build Changelog
+        id: github_release
+        uses: mikepenz/release-changelog-builder-action@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ github.ref }}
+          body: ${{steps.github_release.outputs.changelog}}
+          token: ${{ secrets.GITHUB_TOKEN }}
+    
