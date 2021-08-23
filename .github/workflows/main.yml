@@ -85,6 +85,8 @@ jobs:
         id: changelog
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Show changelog
+        run: echo ${{ steps.changelog.outputs.changelog }}
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
