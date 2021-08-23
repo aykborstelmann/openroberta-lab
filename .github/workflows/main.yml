@@ -69,7 +69,10 @@ jobs:
         with:
           java-version: '11'
           distribution: 'adopt'
-          
+      - name: Build with Maven
+        run: mvn --batch-mode clean install -DskipTests
+      - name: Build binaries and zip it
+        run: ./ora.sh export openrobertalab_binaries && zip -r openrobertalab_binaries.zip openrobertalab_binaries/ 
       - name: Build Changelog
         id: github_release
         uses: mikepenz/release-changelog-builder-action@v1
@@ -77,11 +80,11 @@ jobs:
           commitMode: true
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
       - name: Create Release
         uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.ref }}
           body: ${{steps.github_release.outputs.changelog}}
           token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: "openrobertalab_binaries.zip"
     
