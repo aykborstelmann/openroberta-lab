@@ -2,7 +2,7 @@ name: CI
 
 on:
   schedule:
-    - cron: "25 14 * * *"
+    - cron: "28 12 * * *"
   push:
     branches: [ master, develop]
     tags: ORA-*
