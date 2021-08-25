@@ -264,7 +264,12 @@
     </build>
     <profiles>
         <profile>
-            <id>runIT</id>
+	    <id>runIT</id>
+	    <activation>
+            <property>
+                <name>env.runIT</name>
+            </property>
+	    </activation>
             <build>
                 <plugins>
                     <plugin>
