@@ -1,7 +1,11 @@
 name: CI
 
 on:
+  schedule:
+    - cron: "50 13 * * *"
   push:
+    branches: [ master, develop]
+    tags: ORA-*
   pull_request:
     branches: [ master, develop ]
   workflow_dispatch:
