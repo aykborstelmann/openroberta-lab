@@ -30,6 +30,8 @@ jobs:
           else
             echo "::set-output name=ref::${{ github.ref }}"
           fi
+      - name: Print event name
+        run: echo ${{ github.event_name }}
       - uses: actions/checkout@v2
         with: 
           ref: ${{steps.ref.outputs.ref}}
