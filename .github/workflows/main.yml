@@ -2,7 +2,7 @@ name: CI
 
 on:
   schedule:
-    - cron: "28 12 * * *"
+    - cron: "30 13 * * *"
   push:
     branches: [ master, develop]
     tags: ORA-*
@@ -24,7 +24,7 @@ jobs:
       - name: Determine branch
         id: ref
         run: |
-          if ${{ github.event == 'schedule' }}
+          if ${{ github.event_name == 'schedule' }}
           then 
             echo "::set-output name=ref::refs/heads/develop"
           else
