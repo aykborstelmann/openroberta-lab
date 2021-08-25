@@ -12,8 +12,10 @@ on:
         default: "false"
 jobs:
   build:
+    env: 
+      runIT: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') || github.event.inputs.integration-tests == 'true' }}
     runs-on: ubuntu-latest
-    container: openroberta/it-x64-offical-gitrepo-with-develop:25
+    container: ${{ env.runIT && 'openroberta/it-x64-offical-gitrepo-with-develop:25' || ''}}
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
@@ -34,8 +36,6 @@ jobs:
             
       - name: Build with Maven (and possibly run IT)
         run: mvn --batch-mode clean install
-        env:
-          runIT: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') || github.event.inputs.integration-tests == 'true' }}
   
   release:
     # Only run when tags are pushed
