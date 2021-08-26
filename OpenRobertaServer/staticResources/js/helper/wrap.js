@@ -27,18 +27,19 @@ define([ 'exports', 'comm', 'log', 'jquery' ], function(exports, COMM, LOG, $) {
             var start = new Date();
             try {
                 var that = this;
-                fnToBeWrapped.apply(that,arguments);
+                var result = fnToBeWrapped.apply(that,arguments);
                 if (message !== undefined) {
                     var elapsed = new Date() - start;
                     LOG.text(elapsed + ' msec: ' + message, '[[TIME]] ');
                 }
+                return result;
             } catch (e) {
                 var err = new Error();
                 var elapsed = new Date() - start;
                 if (message !== undefined) {
-                    LOG.error('[[TIME]] ' + elapsed + ' msec: ' + message + ', then EXCEPTION: ' + e + ' with stacktrace: ' + err.stack);
+                    LOG.error('[[ERR ]] ' + elapsed + ' msec: ' + message + ', then EXCEPTION: ' + e + ' with stacktrace: ' + err.stack);
                 } else {
-                    LOG.error('[[TIME]] ' + elapsed + ' msec: wrapTotal caught an EXCEPTION: ' + e + ' with stacktrace: ' + err.stack);
+                    LOG.error('[[ERR ]] ' + elapsed + ' msec: wrapTotal caught an EXCEPTION: ' + e + ' with stacktrace: ' + err.stack);
                 }
             }
         };
@@ -65,8 +66,9 @@ define([ 'exports', 'comm', 'log', 'jquery' ], function(exports, COMM, LOG, $) {
                 numberOfActiveActions++;
                 var fn = wrapTotal(fnToBeWrapped, message);
                 var that = this;
-                fn.apply(that,arguments);
+                var result = fn.apply(that,arguments);
                 numberOfActiveActions--;
+                return result;
              } catch (e) {
                 numberOfActiveActions--;
                 var err = new Error();
@@ -84,9 +86,9 @@ define([ 'exports', 'comm', 'log', 'jquery' ], function(exports, COMM, LOG, $) {
      * @memberof WRAP
      */
     function wrapREST(fnToBeWrapped, message) {
-        numberOfActiveActions++;
         var rest = function() {
             COMM.errorNum = 0;
+            numberOfActiveActions++;
             try {
                 var fn = wrapTotal(fnToBeWrapped, message);
                 var that = this;
@@ -150,6 +152,32 @@ define([ 'exports', 'comm', 'log', 'jquery' ], function(exports, COMM, LOG, $) {
             numberOfActiveActions++;
             var err = new Error();
             LOG.error("clickWrap CRASHED UNEXPECTED AND SEVERELY with EXCEPTION: " + e + " and stacktrace: " + err.stack);
+            COMM.ping(); // transfer data to the server
+        }
+    };
+
+    $.fn.tabWrapShow = function() {
+        numberOfActiveActions--;
+        try {
+            this.tab('show');
+            numberOfActiveActions++;
+        } catch (e) {
+            numberOfActiveActions++;
+            var err = new Error();
+            LOG.error("tabWrap CRASHED UNEXPECTED AND SEVERELY with EXCEPTION: " + e + " and stacktrace: " + err.stack);
+            COMM.ping(); // transfer data to the server
+        }
+    };
+
+    $.fn.oneWrap = function(event, callback) {
+        numberOfActiveActions--;
+        try {
+            this.one(event, callback);
+            numberOfActiveActions++;
+        } catch (e) {
+            numberOfActiveActions++;
+            var err = new Error();
+            LOG.error("oneWrap CRASHED UNEXPECTED AND SEVERELY with EXCEPTION: " + e + " and stacktrace: " + err.stack);
             COMM.ping(); // transfer data to the server
         }
     };

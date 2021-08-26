@@ -62,7 +62,7 @@ define([ 'exports', 'comm', 'message', 'log', 'util', 'guiState.controller', 'ro
             e.preventDefault();
             if (GUISTATE_C.getView() === 'tabConfiguration' && GUISTATE_C.isUserLoggedIn() && !GUISTATE_C.isConfigurationSaved()
                     && !GUISTATE_C.isConfigurationAnonymous()) {
-                $('#show-message-confirm').one('shown.bs.modal', function(e) {
+                $('#show-message-confirm').oneWrap('shown.bs.modal', function(e) {
                     $('#confirm').off();
                     $('#confirm').on('click', function(e) {
                         e.preventDefault();
@@ -70,7 +70,7 @@ define([ 'exports', 'comm', 'message', 'log', 'util', 'guiState.controller', 'ro
                         GUISTATE_C.setConfigurationName('');
                         // or reset to last saved version:
                         //$('#tabConfiguration').trigger('reload');
-                        $('#tabProgram').tab('show');
+                        $('#tabProgram').tabWrapShow();
                     });
                     $('#confirmCancel').off();
                     $('#confirmCancel').on('click', function(e) {
@@ -81,7 +81,7 @@ define([ 'exports', 'comm', 'message', 'log', 'util', 'guiState.controller', 'ro
                 MSG.displayMessage("POPUP_CONFIGURATION_UNSAVED", "POPUP", "", true);
                 return false;
             } else {
-                $('#tabProgram').tab('show');
+                $('#tabProgram').tabWrapShow();
             }
         });
         $('#tabProgram').onWrap('show.bs.tab', function(e) {
@@ -106,7 +106,7 @@ define([ 'exports', 'comm', 'message', 'log', 'util', 'guiState.controller', 'ro
         // work around for touch devices
         $('.levelTabs').on('touchend', function(e) {
             var target = $(e.target).attr("href");
-            $('.levelTabs a[href="' + target + '"]').tab('show');
+            $('.levelTabs a[href="' + target + '"]').tabWrapShow();
         });
 
         $('.levelTabs a[data-toggle="tab"]').onWrap('shown.bs.tab', function(e) {
@@ -226,7 +226,7 @@ define([ 'exports', 'comm', 'message', 'log', 'util', 'guiState.controller', 'ro
                         GUISTATE_C.setConfigurationName(result.configName);
                         GUISTATE_C.setConfigurationXML(result.confXML);
                     }
-                    $('#tabProgram').one('shown.bs.tab', function(e) {
+                    $('#tabProgram').oneWrap('shown.bs.tab', function(e) {
                         CONFIGURATION_C.reloadConf();
                         reloadProgram();
                     });
@@ -324,7 +324,7 @@ define([ 'exports', 'comm', 'message', 'log', 'util', 'guiState.controller', 'ro
     exports.newProgram = newProgram;
 
     function confirmLoadProgram() {
-        $('#show-message-confirm').one('shown.bs.modal', function(e) {
+        $('#show-message-confirm').oneWrap('shown.bs.modal', function(e) {
             $('#confirm').off();
             $('#confirm').on('click', function(e) {
                 e.preventDefault();

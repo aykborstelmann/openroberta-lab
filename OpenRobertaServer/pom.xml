@@ -14,7 +14,7 @@
     <parent>
         <groupId>de.fhg.iais.openroberta</groupId>
         <artifactId>OpenRobertaParent</artifactId>
-        <version>4.1.2-SNAPSHOT</version>
+        <version>4.1.3</version>
     </parent>
     <artifactId>OpenRobertaServer</artifactId>
     <name>OpenRobertaServer</name>
@@ -95,10 +95,6 @@
         <dependency>
             <groupId>de.fhg.iais.openroberta</groupId>
             <artifactId>RobotNXT</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>de.fhg.iais.openroberta</groupId>
-            <artifactId>RobotVorwerk</artifactId>
         </dependency>
         <dependency>
             <groupId>de.fhg.iais.openroberta</groupId>
@@ -194,13 +190,6 @@
                                 <artifactItem>
                                     <groupId>de.fhg.iais.openroberta</groupId>
                                     <artifactId>RobotNAO</artifactId>
-                                    <version>${project.version}</version>
-                                    <type>jar</type>
-                                    <overWrite>true</overWrite>
-                                </artifactItem>
-                                <artifactItem>
-                                    <groupId>de.fhg.iais.openroberta</groupId>
-                                    <artifactId>RobotVorwerk</artifactId>
                                     <version>${project.version}</version>
                                     <type>jar</type>
                                     <overWrite>true</overWrite>

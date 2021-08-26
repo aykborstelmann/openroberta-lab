@@ -25,7 +25,7 @@ define(['exports', 'util', 'log', 'message', 'program.controller', 'program.mode
             return false;
         });
         if (GUISTATE_C.getConnection() !== 'autoConnection' && GUISTATE_C.getConnection() !== 'jsPlay') {
-            blocklyWorkspace.robControls.disable('runOnBrick');
+            GUISTATE_C.setRunEnabled(false);
         }
     }
 
@@ -168,7 +168,7 @@ define(['exports', 'util', 'log', 'message', 'program.controller', 'program.mode
                     $(this).html($(this).html().replace("$", substituteName));
                 });
 
-                $("#save-client-compiled-program").one("shown.bs.modal", function(e) {
+                $("#save-client-compiled-program").oneWrap("shown.bs.modal", function(e) {
                     $('#download-instructions li').each(function(index) {
                         $(this).delay(750 * index).animate({
                             opacity: 1
@@ -176,7 +176,7 @@ define(['exports', 'util', 'log', 'message', 'program.controller', 'program.mode
                     });
                 });
 
-                $('#save-client-compiled-program').one('hidden.bs.modal', function(e) {
+                $('#save-client-compiled-program').oneWrap('hidden.bs.modal', function(e) {
                     var textH = $("#popupDownloadHeader").text();
                     $("#popupDownloadHeader").text(textH.replace($.trim(GUISTATE_C.getRobotRealName()), "$"));
                     if ($('#label-checkbox').is(':checked')) {
@@ -244,7 +244,7 @@ define(['exports', 'util', 'log', 'message', 'program.controller', 'program.mode
                 $('#download-instructions').append(step);
             }
 
-            $("#save-client-compiled-program").one("shown.bs.modal", function(e) {
+            $("#save-client-compiled-program").oneWrap("shown.bs.modal", function(e) {
                 $('#download-instructions li').each(function(index) {
                     $(this).delay(750 * index).animate({
                         opacity: 1
@@ -252,7 +252,7 @@ define(['exports', 'util', 'log', 'message', 'program.controller', 'program.mode
                 });
             });
 
-            $('#save-client-compiled-program').one('hidden.bs.modal', function(e) {
+            $('#save-client-compiled-program').oneWrap('hidden.bs.modal', function(e) {
                 if (!window.msCrypto) {
                     audio.pause();
                     audio.load();
@@ -328,16 +328,11 @@ define(['exports', 'util', 'log', 'message', 'program.controller', 'program.mode
     }
 
     function runStepInterpreter() {
-        while (!interpreter.isTerminated() && !reset) {
+        if (!interpreter.isTerminated() && !reset) {
             var maxRunTime = new Date().getTime() + 100;
-            var waitTime = interpreter.run(maxRunTime);
-
-            if (waitTime >= 0) {
-                timeout(runStepInterpreter, waitTime);
-                return;
-            }
+            var waitTime = Math.max(100, interpreter.run(maxRunTime));
+            timeout(runStepInterpreter, waitTime);
         }
-        interpreter.run(0);
     }
 
     /**

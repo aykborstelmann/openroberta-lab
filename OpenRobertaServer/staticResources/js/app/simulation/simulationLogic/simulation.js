@@ -672,7 +672,7 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
                     }
                 }
             }
-            robots[i].update();
+            robots[i] && robots[i].update();
             updateBreakpointEvent();
         }
         var renderTimeStart = new Date().getTime();
@@ -693,7 +693,9 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
             }
         }
 
-        reset = robots[0].buttons.Reset;
+        if (robots[0] !== undefined && robots[0].buttons !== undefined) {
+            reset = robots[0].buttons.Reset;
+        }
         scene.updateSensorValues(!pause);
         scene.drawRobots();
         renderTime = new Date().getTime() - renderTimeStart;
@@ -1903,7 +1905,7 @@ define(['exports', 'simulation.scene', 'simulation.constants', 'util', 'interpre
                     }
 
                     if (UTIL.isLocalStorageAvailable()) {
-                        $('#show-message-confirm').one('shown.bs.modal', function(e) {
+                        $('#show-message-confirm').oneWrap('shown.bs.modal', function(e) {
                             $('#confirm').off();
                             $('#confirm').on('click', function(e) {
                                 e.preventDefault();
