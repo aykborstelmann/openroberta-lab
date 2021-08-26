@@ -120,4 +120,4 @@ jobs:
           platforms: linux/arm32v7
           build-args: "BASEVERSION=26"
           push: true
-          tags: aykborstelmann/standalone:latest, aykborstelmann/standalone:${{ steps.tag.outputs.tag }}
+          tags: ghcr.io/aykborstelmann/standalone:latest, ghcr.io/aykborstelmann/standalone:${{ steps.tag.outputs.tag }}
