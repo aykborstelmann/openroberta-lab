@@ -16,6 +16,7 @@ RUN mkdir --parent /opt/openroberta-lab/lib /tmp/openrobertaTmp
 WORKDIR /opt/openroberta-lab
 
 COPY --from=build /tmp/build/export .
+COPY Docker/openroberta/conf/y-standalone-lab/start.sh . 
 RUN chmod ugo+rx ./*.sh
 
 ENTRYPOINT ["./start.sh"]
