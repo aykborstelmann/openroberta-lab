@@ -117,7 +117,6 @@ jobs:
           context: .
           file: ./Docker/openroberta/conf/y-standalone-lab/Dockerfile
           platforms: linux/arm32v7
-          build-args:
-            -BASEVERSION: 26
+          build-args: "BASEVERSION=26"
           push: true
           tags: kyatech/standalone:latest, kyatech/standalone:${{ steps.tag.outputs.tag }}
