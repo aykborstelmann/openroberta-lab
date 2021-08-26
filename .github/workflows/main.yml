@@ -120,4 +120,4 @@ jobs:
           platforms: linux/arm32v7
           build-args: "BASEVERSION=26"
           push: true
-          tags: kyatech/standalone:latest, kyatech/standalone:${{ steps.tag.outputs.tag }}
+          tags: aykborstelmann/standalone:latest, aykborstelmann/standalone:${{ steps.tag.outputs.tag }}
