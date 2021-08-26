@@ -1,53 +1,46 @@
 name: CI
 
 on:
+  schedule:
+    - cron: "30 13 * * *"
   push:
+    branches: [ master, develop]
+    tags:
+     - ORA-*
   pull_request:
     branches: [ master, develop ]
   workflow_dispatch:
-    inputs: 
+    inputs:
       integration-tests:
         description: 'Run Integration Tests'
         required: false
         default: "false"
 jobs:
   build:
-    runs-on: ubuntu-latest
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v2
-      
-      - name: Setup Java JDK 11
-        uses: actions/setup-java@v2.1.0
-        with:
-          java-version: '11'
-          distribution: 'adopt'
-          
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository
-          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-maven-
-          
-      - name: Build with Maven
-        run: mvn --batch-mode clean install
-  
-  integration-tests:
+    env:
+      runIT: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') || github.event_name == 'schedule' || github.event.inputs.integration-tests == 'true' }}
     runs-on: ubuntu-latest
     container: openroberta/it-x64-offical-gitrepo-with-develop:25
-    if: ${{ github.ref == 'refs/heads/master'  || github.event.inputs.integration-tests == 'true' }}
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Determine branch
+        id: ref
+        run: |
+          if ${{ github.event_name == 'schedule' }}
+          then
+            echo "::set-output name=ref::refs/heads/develop"
+          else
+            echo "::set-output name=ref::${{ github.ref }}"
+          fi
+      - name: Print event name
+        run: echo ${{ github.event_name }}
       - uses: actions/checkout@v2
-      
+        with:
+          ref: ${{steps.ref.outputs.ref}}
       - name: Setup Java JDK 11
         uses: actions/setup-java@v2.1.0
         with:
           java-version: '11'
           distribution: 'adopt'
-    
       - name: Cache local Maven repository
         uses: actions/cache@v2
         with:
@@ -55,6 +48,42 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-            
+
+      - name: Build with Maven (and possibly run IT)
+        run: mvn --batch-mode clean install
+
+  release:
+    # Only run when tags are pushed
+    runs-on: ubuntu-latest
+    if: startsWith(github.ref, 'refs/tags/')
+    needs: [build]
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup Java JDK 11
+        uses: actions/setup-java@v2.1.0
+        with:
+          java-version: '11'
+          distribution: 'adopt'
+      - name: Cache local Maven repository
+        uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
       - name: Build with Maven
-        run: mvn --batch-mode clean install -PrunIT
+        run: mvn --batch-mode clean install -DskipTests
+      - name: Build binaries and zip it
+        run: ./ora.sh export openrobertalab_binaries gzip && zip -r openrobertalab_binaries.zip openrobertalab_binaries/
+      - name: Build Changelog
+        uses: OpenRoberta/gh-actions-issue-changelog@v1
+        id: changelog
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          body: ${{steps.changelog.outputs.changelog}}
+          files: openrobertalab_binaries.zip
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
