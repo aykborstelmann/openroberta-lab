@@ -110,13 +110,21 @@ jobs:
         id: tag
         run: |
           echo ::set-output name=tag::${GITHUB_REF#refs/tags/ORA-}
-      - name: Build
+      - name: Build standalone
         uses: docker/build-push-action@v2
         with:
           builder: ${{ steps.buildx.outputs.name }}
           context: .
           file: ./Docker/openroberta/conf/y-standalone-lab/Dockerfile
-          platforms: linux/arm32v7
-          build-args: "BASEVERSION=26"
+          platforms: linux/arm/v7, linux/amd64
           push: true
           tags: openroberta/standalone:latest, openroberta/standalone:${{ steps.tag.outputs.tag }}
+      - name: Build docker for lab
+        uses: docker/build-push-action@v2
+        with:
+          builder: ${{ steps.buildx.outputs.name }}
+          context: .
+          file: ./Docker/openroberta/conf/y-docker-for-lab-ci/Dockerfile
+          platforms: linux/amd64
+          push: true
+          tags: openroberta/server-dev:${{ steps.tag.outputs.tag }}
