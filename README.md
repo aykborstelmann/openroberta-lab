@@ -1,5 +1,8 @@
+
 Open Roberta Lab
 ================
+
+[![CI](https://github.com/OpenRoberta/openroberta-lab/actions/workflows/main.yml/badge.svg)](https://github.com/OpenRoberta/openroberta-lab/actions/workflows/main.yml)
 
 ### Introduction
 
