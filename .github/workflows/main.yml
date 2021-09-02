@@ -17,7 +17,7 @@ on:
         default: "false"
 jobs:
   build:
-    if: ${{ !(${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') || github.event_name == 'schedule' || github.event.inputs.integration-tests == 'true' }}) }}
+    if: ${{ !(github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') || github.event_name == 'schedule' || github.event.inputs.integration-tests == 'true') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
