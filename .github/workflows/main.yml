@@ -2,7 +2,7 @@ name: CI
 
 on:
   schedule:
-    - cron: "30 13 * * *"
+    - cron: "0 0 * * *"
   push:
     branches: [ master, develop]
     tags:
@@ -18,9 +18,10 @@ on:
 jobs:
   build:
     env:
+      # Only run IntegrationTests if we are on master, have a tag pushed, are currently the nightly build or if we got the flag integrations-tests on true
       runIT: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') || github.event_name == 'schedule' || github.event.inputs.integration-tests == 'true' }}
     runs-on: ubuntu-latest
-    container: openroberta/it-x64-offical-gitrepo-with-develop:25
+    container: openroberta/base:25
     steps:
       - name: Determine branch
         id: ref
