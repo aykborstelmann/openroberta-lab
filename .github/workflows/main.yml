@@ -15,13 +15,9 @@ on:
         description: 'Run Integration Tests'
         required: false
         default: "false"
-
-env:
-  IT: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') || github.event_name == 'schedule' || github.event.inputs.integration-tests == 'true' }}
-
 jobs:
   build:
-    if: ${{ ! env.IT }}
+    if: ${{ !(${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') || github.event_name == 'schedule' || github.event.inputs.integration-tests == 'true' }}) }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -41,7 +37,7 @@ jobs:
         run: mvn --batch-mode clean install
 
   integration-test:
-    if: ${{ env.IT }}
+    if: ${{ github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags/') || github.event_name == 'schedule' || github.event.inputs.integration-tests == 'true' }}
     runs-on: ubuntu-latest
     steps:
       - name: Determine branch
