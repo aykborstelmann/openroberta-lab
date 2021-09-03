@@ -67,8 +67,6 @@ jobs:
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
       - name: Build with Maven and run Integration Tests
         run: mvn --batch-mode clean install -PrunIT
 
