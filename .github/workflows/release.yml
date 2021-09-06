@@ -67,7 +67,7 @@ jobs:
           file: ./Docker/openroberta/conf/y-standalone-lab/Dockerfile
           platforms: linux/arm/v7, linux/amd64
           push: true
-          tags: openroberta/standalone:latest, openroberta/standalone:${{ steps.tag.outputs.tag }}
+          tags: kyatech/standalone:latest, kyatech/standalone:${{ steps.tag.outputs.tag }}
       - name: Build docker for lab
         uses: docker/build-push-action@v2
         with:
@@ -76,4 +76,4 @@ jobs:
           file: ./Docker/openroberta/conf/y-docker-for-lab-ci/Dockerfile
           platforms: linux/amd64
           push: true
-          tags: openroberta/server:${{ steps.tag.outputs.tag }}
+          tags: kyatech/server:${{ steps.tag.outputs.tag }}
