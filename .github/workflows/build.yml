@@ -1,4 +1,4 @@
-name: Build
+name: run the unit tests
 
 on:
   push:
@@ -6,26 +6,28 @@ on:
     paths-ignore:
       - '.github/**'
       - 'Docker/**'
-  pull_request:
-    branches: [ develop ]
-  workflow_dispatch:
+
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - name: Setup Java JDK 11
+      - run: echo "run unit tests for branch ${{ github.ref }} of repo ${{ github.repository }}"
+      - name: Checkout the branch
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Setup Java JDK
         uses: actions/setup-java@v2.1.0
         with:
           java-version: '11'
           distribution: 'adopt'
-      - name: Cache local Maven repository
+      - name: Cache local maven repository
         uses: actions/cache@v2
         with:
           path: ~/.m2/repository
           key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
           restore-keys: |
             ${{ runner.os }}-maven-
-      - name: Build with Maven
+      - name: Build with maven and run unit tests
         run: mvn --batch-mode clean install
