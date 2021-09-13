@@ -1,5 +1,4 @@
-name: run the integration tests
-
+name: IntegrationTest
 on:
   schedule:
     - cron: "0 0 * * *"
