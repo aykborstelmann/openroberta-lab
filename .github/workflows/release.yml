@@ -1,5 +1,4 @@
-name: create release for tag ORA_
-
+name: Release
 on:
   push:
     tags:
